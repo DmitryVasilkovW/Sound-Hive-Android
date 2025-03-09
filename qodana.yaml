@@ -1,0 +1,11 @@
+version: "1.0"
+linter: jetbrains/jetbrains/qodana-jvm-android:2024.3
+profile:
+  path: .idea/inspectionProfiles/Sound_Hive_Android.xml
+exclude:
+  - name: All
+    paths:
+      - build
+      - gradle
+      - qodana
+      - .qodana
