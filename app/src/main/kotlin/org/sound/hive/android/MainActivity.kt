@@ -36,11 +36,18 @@ fun AppNavHost() {
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(HOME) {
-                HomeScreen()
+                HomeScreen(navController)
             }
 
             composable(ACCOUNT) {
                 AccountScreen(navController)
+            }
+
+            composable("details/{id}") { backStackEntry ->
+                val id = backStackEntry.arguments?.getString("id")
+                id?.let {
+                    TrackDetailsScreen(trackId = it)
+                }
             }
         }
     }
