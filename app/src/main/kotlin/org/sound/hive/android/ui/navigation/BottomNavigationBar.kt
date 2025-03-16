@@ -1,13 +1,19 @@
 package org.sound.hive.android.ui.navigation
 
-
 import androidx.compose.material.*
 import androidx.compose.material.icons.*
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.vector.*
+import androidx.compose.ui.tooling.preview.*
 import androidx.navigation.*
 import androidx.navigation.compose.*
+
+@Composable
+@Preview
+fun BottomNavigationBarPreview() {
+    BottomNavigationBar(rememberNavController())
+}
 
 @Composable
 fun BottomNavigationBar(navController: NavController) {
@@ -36,4 +42,8 @@ fun BottomNavigationBar(navController: NavController) {
     }
 }
 
-data class BottomNavItem(val route: String, val title: String, val icon: ImageVector)
+data class BottomNavItem(
+    val route: String,
+    val title: String,
+    val icon: ImageVector
+)
