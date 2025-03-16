@@ -8,6 +8,7 @@ import androidx.compose.ui.graphics.vector.*
 import androidx.compose.ui.tooling.preview.*
 import androidx.navigation.*
 import androidx.navigation.compose.*
+import org.sound.hive.android.ui.common.*
 
 @Composable
 @Preview
@@ -18,8 +19,8 @@ fun BottomNavigationBarPreview() {
 @Composable
 fun BottomNavigationBar(navController: NavController) {
     val items = listOf(
-        BottomNavItem("home", "Главная", Icons.Default.Home),
-        BottomNavItem("details", "Детали", Icons.Default.Info)
+        BottomNavItem(HOME, "Главная", Icons.Default.Home),
+        BottomNavItem(ACCOUNT, "Аккаунт", Icons.Default.AccountCircle)
     )
 
     BottomNavigation {
@@ -32,7 +33,7 @@ fun BottomNavigationBar(navController: NavController) {
                 onClick = {
                     if (currentRoute != route) {
                         navController.navigate(route) {
-                            popUpTo("home") { inclusive = false }
+                            popUpTo(HOME) { inclusive = false }
                             launchSingleTop = true
                         }
                     }
