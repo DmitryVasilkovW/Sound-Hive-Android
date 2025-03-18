@@ -6,16 +6,16 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.*
 
-private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+private val darkColorScheme = darkColorScheme(
+    primary = purple80,
+    secondary = purpleGrey80,
+    tertiary = pink80
 )
 
-private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+private val lightColorScheme = lightColorScheme(
+    primary = purple40,
+    secondary = purpleGrey40,
+    tertiary = pink40
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -41,13 +41,13 @@ fun SoundHiveAndroid(
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
 
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+        darkTheme -> darkColorScheme
+        else -> lightColorScheme
     }
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = typography,
         content = content
     )
 }

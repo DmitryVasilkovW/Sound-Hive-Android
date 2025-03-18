@@ -19,8 +19,8 @@ fun BottomNavigationBarPreview() {
 @Composable
 fun BottomNavigationBar(navController: NavController) {
     val items = listOf(
-        BottomNavItem(HOME, "Главная", Icons.Default.Home),
-        BottomNavItem(ACCOUNT, "Аккаунт", Icons.Default.AccountCircle)
+        BottomNavItem(home, "Главная", Icons.Default.Home),
+        BottomNavItem(account, "Аккаунт", Icons.Default.AccountCircle)
     )
 
     BottomNavigation {
@@ -33,7 +33,7 @@ fun BottomNavigationBar(navController: NavController) {
                 onClick = {
                     if (currentRoute != route) {
                         navController.navigate(route) {
-                            popUpTo(HOME) { inclusive = false }
+                            popUpTo(home) { inclusive = false }
                             launchSingleTop = true
                         }
                     }

@@ -32,14 +32,14 @@ fun AppNavHost() {
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = HOME,
+            startDestination = home,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable(HOME) {
+            composable(home) {
                 HomeScreen(navController)
             }
 
-            composable(ACCOUNT) {
+            composable(account) {
                 AccountScreen(navController)
             }
 
