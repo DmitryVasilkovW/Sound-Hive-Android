@@ -25,18 +25,22 @@ fun AppNavHost() {
 
     NavHost(
         navController = navController,
-        startDestination = home,
+        startDestination = homeRoute,
     ) {
-        composable(home) {
+        composable(homeRoute) {
             HomeScreen(navController)
         }
 
-        composable(account) {
+        composable(accountRoute) {
             AccountScreen(navController)
         }
 
-        composable(history) {
+        composable(historyRoute) {
             HistoryScreen(navController)
+        }
+
+        composable(favoritesRoute) {
+            FavoritesScreen(navController)
         }
     }
 }
