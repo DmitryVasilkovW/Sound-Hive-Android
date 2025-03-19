@@ -37,66 +37,86 @@ fun HomeScreen(navController: NavController) {
                 .background(MaterialTheme.colorScheme.background)
                 .padding(16.dp),
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ) {
-                NavigationIcon(navController)
+            HomeHeader(navController)
 
-                IconButton(onClick = {}) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_settings),
-                        contentDescription = "Settings",
-                        tint = MaterialTheme.colorScheme.onBackground,
-                    )
-                }
-            }
-
-            Row(modifier = Modifier.fillMaxWidth()) {
-                val imageModifier = Modifier
-                    .weight(1f)
-                    .aspectRatio(1f)
-                    .clip(RoundedCornerShape(20.dp))
-
-                Image(
-                    painter = painterResource(R.drawable.velvet_underground_and_nico),
-                    contentDescription = "Album Cover",
-                    contentScale = ContentScale.Crop,
-                    modifier = imageModifier,
-                )
-
-                Spacer(modifier = Modifier.width(16.dp))
-
-                Image(
-                    painter = painterResource(R.drawable.ic_avatar_default),
-                    contentDescription = "Profile Picture",
-                    contentScale = ContentScale.Crop,
-                    modifier = imageModifier.border(
-                        2.dp,
-                        MaterialTheme.colorScheme.primary,
-                        RoundedCornerShape(20.dp),
-                    )
-                )
-            }
+            ImageRow()
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
-                ) {
-                    val boxModifier = Modifier.weight(1f).aspectRatio(1f)
-                    HistoryBox(boxModifier, navController)
-                    FavoritesBox(boxModifier)
-                }
-                FriendsBox(Modifier.fillMaxWidth().weight(1f))
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
+            BoxesSection(navController)
         }
+    }
+}
+
+@Composable
+private fun HomeHeader(navController: NavController) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+    ) {
+        NavigationIcon(navController)
+
+        IconButton(onClick = {}) {
+            Icon(
+                painter = painterResource(R.drawable.ic_settings),
+                contentDescription = "Settings",
+                tint = MaterialTheme.colorScheme.onBackground,
+            )
+        }
+    }
+}
+
+@Composable
+private fun ImageRow() {
+    Row(modifier = Modifier.fillMaxWidth()) {
+        val imageModifier = Modifier
+            .weight(1f)
+            .aspectRatio(1f)
+            .clip(RoundedCornerShape(20.dp))
+
+        Image(
+            painter = painterResource(R.drawable.velvet_underground_and_nico),
+            contentDescription = "Album Cover",
+            contentScale = ContentScale.Crop,
+            modifier = imageModifier,
+        )
+
+        Spacer(modifier = Modifier.width(16.dp))
+
+        Image(
+            painter = painterResource(R.drawable.ic_avatar_default),
+            contentDescription = "Profile Picture",
+            contentScale = ContentScale.Crop,
+            modifier = imageModifier.border(
+                2.dp,
+                MaterialTheme.colorScheme.primary,
+                RoundedCornerShape(20.dp),
+            )
+        )
+    }
+}
+
+@Composable
+private fun BoxesSection(navController: NavController) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            val boxModifier = Modifier
+                .weight(1f)
+                .aspectRatio(1f)
+
+            HistoryBox(boxModifier, navController)
+            FavoritesBox(boxModifier)
+        }
+        FriendsBox(
+            Modifier
+                .fillMaxWidth()
+                .weight(1f)
+        )
     }
 }
