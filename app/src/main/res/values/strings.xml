@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Sound-Hive-Android</string>
-    <string name="favorites_box_name">Favorites</string>
-    <string name="history_box_name">History</string>
-    <string name="friends_box_name">Friends</string>
+    <string name="favorites_name">Favorites</string>
+    <string name="history_name">History</string>
+    <string name="friends_name">Friends</string>
+    <string name="last_listened_filter">Last listened</string>
+    <string name="top_month_filter">Top of the month</string>
+    <string name="top_year_filter">Top for the year</string>
+    <string name="top_all_time_filter">Top all time</string>
 </resources>

@@ -2,6 +2,7 @@ package org.sound.hive.android.ui.element.homeScreenBox
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
@@ -19,15 +20,21 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import org.sound.hive.android.R
+import org.sound.hive.android.ui.common.history
 
 @Composable
-fun HistoryBox(modifier: Modifier) {
+fun HistoryBox(modifier: Modifier, navController: NavController) {
     Box(
-        modifier = modifier.background(
-            color = MaterialTheme.colorScheme.secondary,
-            shape = RoundedCornerShape(20.dp),
-        ),
+        modifier = modifier
+            .background(
+                color = MaterialTheme.colorScheme.secondary,
+                shape = RoundedCornerShape(20.dp),
+            )
+            .clickable {
+                navController.navigate(history)
+            },
         contentAlignment = Alignment.Center,
     ) {
         Image(
@@ -51,7 +58,7 @@ fun HistoryBox(modifier: Modifier) {
         )
 
         Text(
-            text = stringResource(R.string.history_box_name),
+            text = stringResource(R.string.history_name),
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onSecondary,
         )

@@ -55,7 +55,7 @@ fun FavoritesBox(modifier: Modifier) {
             modifier = Modifier.fillMaxSize(),
         ) {
             Text(
-                text = stringResource(R.string.favorites_box_name),
+                text = stringResource(R.string.favorites_name),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSecondary,
             )

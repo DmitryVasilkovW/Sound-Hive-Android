@@ -65,7 +65,7 @@ fun FriendsBox(modifier: Modifier) {
 
         Column {
             Text(
-                text = stringResource(R.string.friends_box_name),
+                text = stringResource(R.string.friends_name),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onPrimary,
                 modifier = Modifier.padding(bottom = 12.dp),
