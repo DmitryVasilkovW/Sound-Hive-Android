@@ -22,7 +22,6 @@ import org.sound.hive.android.model.Friend
 import org.sound.hive.android.ui.common.favoritesRoute
 import org.sound.hive.android.ui.common.historyRoute
 import org.sound.hive.android.ui.element.FriendItem
-import org.sound.hive.android.ui.element.NavigationIcon
 import org.sound.hive.android.ui.theme.SoundHiveAndroid
 
 @Composable
@@ -42,7 +41,7 @@ fun HomeScreen(navController: NavController) {
                 .background(MaterialTheme.colorScheme.background)
                 .padding(16.dp),
         ) {
-            HomeHeader(navController)
+            HomeHeader()
 
             ImageRow()
 
@@ -54,13 +53,11 @@ fun HomeScreen(navController: NavController) {
 }
 
 @Composable
-private fun HomeHeader(navController: NavController) {
+private fun HomeHeader() {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
-        NavigationIcon(navController)
-
         IconButton(onClick = {}) {
             Icon(
                 painter = painterResource(R.drawable.ic_settings),
