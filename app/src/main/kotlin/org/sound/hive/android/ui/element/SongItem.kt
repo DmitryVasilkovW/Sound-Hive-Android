@@ -22,18 +22,25 @@ import org.sound.hive.android.R
 import org.sound.hive.android.model.Song
 
 @Composable
-fun SongItem(song: Song) {
+fun SongItem(song: Song, index: Int) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(
-                start = 20.dp,
+                start = 26.dp,
                 end = 16.dp,
-                top = 5.dp,
+                top = 8.dp,
                 bottom = 5.dp
             ),
         verticalAlignment = Alignment.CenterVertically
     ) {
+        Text(
+            text = "$index",
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f),
+            modifier = Modifier.padding(end = 8.dp)
+        )
+
         Image(
             painter = painterResource(id = song.coverResId),
             contentDescription = "Album cover",

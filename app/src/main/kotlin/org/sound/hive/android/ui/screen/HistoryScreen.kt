@@ -54,7 +54,14 @@ private fun HistoryHeader(
     showFilterMenu: Boolean,
     onFilterMenuChange: (Boolean) -> Unit
 ) {
-    Column(modifier = Modifier.padding(16.dp)) {
+    Column(
+        modifier = Modifier.padding(
+            top = 16.dp,
+            bottom = 6.dp,
+            start = 16.dp,
+            end = 16.dp,
+        )
+    ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
@@ -131,8 +138,8 @@ private fun SongList() {
     val songs = remember { songsExample }
 
     LazyColumn(modifier = Modifier.fillMaxSize()) {
-        items(songs) { song ->
-            SongItem(song = song)
+        itemsIndexed(songs) { index, song ->
+            SongItem(song = song, index = index + 1)
         }
     }
 }

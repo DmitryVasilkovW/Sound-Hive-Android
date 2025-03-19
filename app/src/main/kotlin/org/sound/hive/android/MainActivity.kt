@@ -38,12 +38,5 @@ fun AppNavHost() {
         composable(history) {
             HistoryScreen(navController)
         }
-
-        composable("details/{id}") { backStackEntry ->
-            val id = backStackEntry.arguments?.getString("id")
-            id?.let {
-                TrackDetailsScreen(trackId = it)
-            }
-        }
     }
 }
