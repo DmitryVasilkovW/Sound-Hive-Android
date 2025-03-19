@@ -2,6 +2,7 @@ package org.sound.hive.android.ui.screen
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.*
@@ -56,7 +57,7 @@ fun HomeScreen(navController: NavController) {
 private fun HomeHeader() {
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
+        horizontalArrangement = Arrangement.End,
     ) {
         IconButton(onClick = {}) {
             Icon(
