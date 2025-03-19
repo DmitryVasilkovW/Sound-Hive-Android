@@ -28,7 +28,7 @@ import androidx.navigation.NavController
 @Composable
 fun ScreenHeaderWithFilterMenu(
     navController: NavController,
-    label: String,
+    title: String,
     filterOptions: List<Int>,
     showFilterMenu: Boolean,
     onFilterMenuChange: (Boolean) -> Unit
@@ -47,7 +47,7 @@ fun ScreenHeaderWithFilterMenu(
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             NavigationIcon(navController)
-            ScreenTitle(label)
+            ScreenTitle(title)
             FilterMenu(filterOptions, showFilterMenu, onFilterMenuChange)
         }
     }
