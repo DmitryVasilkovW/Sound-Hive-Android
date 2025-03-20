@@ -4,7 +4,7 @@ import androidx.compose.material3.*
 import androidx.compose.ui.text.*
 import androidx.compose.ui.text.font.*
 import androidx.compose.ui.unit.*
-import org.sound.hive.android.*
+import org.sound.hive.android.R
 
 val martianMono = FontFamily(
     Font(R.font.martian_mono_light, FontWeight.Light),

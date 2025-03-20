@@ -12,6 +12,7 @@ import androidx.compose.ui.res.*
 import androidx.compose.ui.text.font.*
 import androidx.compose.ui.tooling.preview.*
 import androidx.compose.ui.unit.*
+import androidx.constraintlayout.compose.*
 import androidx.navigation.*
 import androidx.navigation.compose.*
 import org.sound.hive.android.R
@@ -24,55 +25,87 @@ fun AccountScreenPreview() {
 
 @Composable
 fun AccountScreen(navController: NavController) {
-    val user = User("ты", "pochta@abc.com", R.drawable.ic_launcher_background)
+    val user = remember { mutableStateOf(User("Bazis", "pochta@abc.com", R.drawable.ic_avatar_default)) }
 
-    Column(
+    ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .padding(16.dp)
     ) {
+        val (avatar, name, email, editButton, logoutButton, backButton) = createRefs()
+
         Image(
-            painter = painterResource(id = user.profilePicture),
+            painter = painterResource(id = user.value.profilePicture),
             contentDescription = "Profile Picture",
             modifier = Modifier
                 .size(120.dp)
                 .clip(CircleShape)
                 .border(2.dp, Color.Gray, CircleShape)
+                .constrainAs(avatar) {
+                    top.linkTo(parent.top, margin = 32.dp)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Text(
+            text = user.value.name,
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.constrainAs(name) {
+                top.linkTo(avatar.bottom, margin = 16.dp)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            }
+        )
 
-        Text(text = user.name, fontSize = 24.sp, fontWeight = FontWeight.Bold)
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Text(text = user.email, fontSize = 16.sp)
-
-        Spacer(modifier = Modifier.height(32.dp))
+        Text(
+            text = user.value.email,
+            fontSize = 16.sp,
+            color = Color.Gray,
+            modifier = Modifier.constrainAs(email) {
+                top.linkTo(name.bottom, margin = 8.dp)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            }
+        )
 
         Button(
-            onClick = { },
-            modifier = Modifier.fillMaxWidth()
+            onClick = { /* TODO: Добавить логику редактирования */ },
+            modifier = Modifier
+                .fillMaxWidth()
+                .constrainAs(editButton) {
+                    top.linkTo(email.bottom, margin = 32.dp)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
         ) {
             Text(text = "Редактировать профиль")
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
-
         Button(
-            onClick = { },
-            modifier = Modifier.fillMaxWidth(),
+            onClick = { /* TODO: Добавить выход из аккаунта */ },
+            modifier = Modifier
+                .fillMaxWidth()
+                .constrainAs(logoutButton) {
+                    top.linkTo(editButton.bottom, margin = 16.dp)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                },
             colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
         ) {
             Text(text = "Выйти", color = Color.White)
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
-
         Button(
             onClick = { navController.popBackStack() },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .constrainAs(backButton) {
+                    top.linkTo(logoutButton.bottom, margin = 16.dp)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
         ) {
             Text(text = "Назад")
         }

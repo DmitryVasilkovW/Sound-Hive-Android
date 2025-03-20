@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.*
 import androidx.compose.ui.unit.*
 import androidx.navigation.*
 import androidx.navigation.compose.*
-import org.sound.hive.android.*
+import org.sound.hive.android.R
 import org.sound.hive.android.model.*
 import org.sound.hive.android.ui.common.*
 import org.sound.hive.android.ui.element.*
@@ -39,7 +39,7 @@ fun HomeScreen(navController: NavController) {
         ) {
             HomeHeader()
 
-            ImageRow()
+            ImageRow(navController)
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -65,7 +65,7 @@ private fun HomeHeader() {
 }
 
 @Composable
-private fun ImageRow() {
+private fun ImageRow(navController: NavController) {
     Row(modifier = Modifier.fillMaxWidth()) {
         val imageModifier = Modifier
             .weight(1f)
@@ -81,11 +81,24 @@ private fun ImageRow() {
 
         Spacer(modifier = Modifier.width(16.dp))
 
+        AccountRow(imageModifier, navController)
+    }
+}
+
+@Composable
+fun AccountRow(modifier: Modifier, navController: NavController) {
+    Box(
+        modifier = modifier
+            .clickable {
+                navController.navigate(accountRoute)
+            },
+        contentAlignment = Alignment.Center,
+    ) {
         Image(
             painter = painterResource(R.drawable.ic_avatar_default),
             contentDescription = "Profile Picture",
             contentScale = ContentScale.Crop,
-            modifier = imageModifier.border(
+            modifier = modifier.border(
                 2.dp,
                 MaterialTheme.colorScheme.primary,
                 RoundedCornerShape(20.dp),

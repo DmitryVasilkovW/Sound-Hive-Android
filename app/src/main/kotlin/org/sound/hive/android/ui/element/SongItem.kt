@@ -10,7 +10,7 @@ import androidx.compose.ui.draw.*
 import androidx.compose.ui.layout.*
 import androidx.compose.ui.res.*
 import androidx.compose.ui.unit.*
-import org.sound.hive.android.*
+import org.sound.hive.android.R
 import org.sound.hive.android.model.*
 
 @Composable
