@@ -1,11 +1,10 @@
 package org.sound.hive.android.ui.element
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.automirrored.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.navigation.*
 
 @Composable
 fun NavigationIcon(navController: NavController) {

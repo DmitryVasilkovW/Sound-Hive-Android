@@ -2,28 +2,23 @@ package org.sound.hive.android.ui.screen
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import org.sound.hive.android.R
-import org.sound.hive.android.model.Friend
-import org.sound.hive.android.ui.common.favoritesRoute
-import org.sound.hive.android.ui.common.historyRoute
-import org.sound.hive.android.ui.element.FriendItem
-import org.sound.hive.android.ui.theme.SoundHiveAndroid
+import androidx.compose.ui.draw.*
+import androidx.compose.ui.layout.*
+import androidx.compose.ui.res.*
+import androidx.compose.ui.tooling.preview.*
+import androidx.compose.ui.unit.*
+import androidx.navigation.*
+import androidx.navigation.compose.*
+import org.sound.hive.android.*
+import org.sound.hive.android.model.*
+import org.sound.hive.android.ui.common.*
+import org.sound.hive.android.ui.element.*
+import org.sound.hive.android.ui.theme.*
 
 @Composable
 @Preview

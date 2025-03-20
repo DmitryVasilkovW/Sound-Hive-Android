@@ -5,10 +5,10 @@ import androidx.compose.ui.res.*
 import androidx.compose.ui.tooling.preview.*
 import androidx.navigation.*
 import androidx.navigation.compose.*
+import org.sound.hive.android.*
 import org.sound.hive.android.ui.common.*
 import org.sound.hive.android.ui.element.*
 import org.sound.hive.android.ui.theme.*
-import org.sound.hive.android.R
 
 @Composable
 @Preview
