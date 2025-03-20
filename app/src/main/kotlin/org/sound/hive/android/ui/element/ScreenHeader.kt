@@ -12,6 +12,31 @@ import androidx.compose.ui.unit.*
 import androidx.navigation.*
 
 @Composable
+fun ScreenHeaderWithSettings(
+    navController: NavController,
+    title: String,
+) {
+    Column(
+        modifier = Modifier.padding(
+            top = 16.dp,
+            bottom = 6.dp,
+            start = 16.dp,
+            end = 16.dp,
+        )
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            NavigationIcon(navController)
+            ScreenTitle(title)
+            SettingsButton()
+        }
+    }
+}
+
+@Composable
 fun ScreenHeaderWithFilterMenu(
     navController: NavController,
     title: String,

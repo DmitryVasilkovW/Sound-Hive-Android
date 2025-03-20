@@ -54,13 +54,7 @@ private fun HomeHeader() {
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.End,
     ) {
-        IconButton(onClick = {}) {
-            Icon(
-                painter = painterResource(R.drawable.ic_settings),
-                contentDescription = "Settings",
-                tint = MaterialTheme.colorScheme.onBackground,
-            )
-        }
+        SettingsButton()
     }
 }
 

@@ -6,110 +6,84 @@ import androidx.compose.foundation.shape.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
-import androidx.compose.ui.draw.*
-import androidx.compose.ui.graphics.*
+import androidx.compose.ui.layout.*
 import androidx.compose.ui.res.*
-import androidx.compose.ui.text.font.*
 import androidx.compose.ui.tooling.preview.*
 import androidx.compose.ui.unit.*
-import androidx.constraintlayout.compose.*
 import androidx.navigation.*
 import androidx.navigation.compose.*
 import org.sound.hive.android.R
+import org.sound.hive.android.ui.element.*
+import org.sound.hive.android.ui.theme.*
 
 @Composable
 @Preview
 fun AccountScreenPreview() {
-    AccountScreen(rememberNavController())
+    SoundHiveAndroid {
+        AccountScreen(rememberNavController())
+    }
 }
 
 @Composable
 fun AccountScreen(navController: NavController) {
-    val user = remember { mutableStateOf(User("Bazis", "pochta@abc.com", R.drawable.ic_avatar_default)) }
-
-    ConstraintLayout(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        val (avatar, name, email, editButton, logoutButton, backButton) = createRefs()
-
-        Image(
-            painter = painterResource(id = user.value.profilePicture),
-            contentDescription = "Profile Picture",
+    SoundHiveAndroid {
+        Column(
             modifier = Modifier
-                .size(120.dp)
-                .clip(CircleShape)
-                .border(2.dp, Color.Gray, CircleShape)
-                .constrainAs(avatar) {
-                    top.linkTo(parent.top, margin = 32.dp)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                }
-        )
-
-        Text(
-            text = user.value.name,
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.constrainAs(name) {
-                top.linkTo(avatar.bottom, margin = 16.dp)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            }
-        )
-
-        Text(
-            text = user.value.email,
-            fontSize = 16.sp,
-            color = Color.Gray,
-            modifier = Modifier.constrainAs(email) {
-                top.linkTo(name.bottom, margin = 8.dp)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            }
-        )
-
-        Button(
-            onClick = { /* TODO: Добавить логику редактирования */ },
-            modifier = Modifier
-                .fillMaxWidth()
-                .constrainAs(editButton) {
-                    top.linkTo(email.bottom, margin = 32.dp)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                }
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+                .padding(16.dp),
         ) {
-            Text(text = "Редактировать профиль")
-        }
+            AccountHeader(navController)
 
-        Button(
-            onClick = { /* TODO: Добавить выход из аккаунта */ },
-            modifier = Modifier
-                .fillMaxWidth()
-                .constrainAs(logoutButton) {
-                    top.linkTo(editButton.bottom, margin = 16.dp)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                },
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
-        ) {
-            Text(text = "Выйти", color = Color.White)
-        }
+            Spacer(modifier = Modifier.height(16.dp))
 
-        Button(
-            onClick = { navController.popBackStack() },
-            modifier = Modifier
-                .fillMaxWidth()
-                .constrainAs(backButton) {
-                    top.linkTo(logoutButton.bottom, margin = 16.dp)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                }
-        ) {
-            Text(text = "Назад")
+            AccountInfoSection()
         }
     }
 }
 
-data class User(val name: String, val email: String, val profilePicture: Int)
+@Composable
+private fun AccountHeader(navController: NavController) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        ScreenHeaderWithSettings(navController, stringResource(R.string.account_title))
+    }
+}
+
+@Composable
+private fun AccountInfoSection() {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Image(
+            painter = painterResource(R.drawable.ic_avatar_default),
+            contentDescription = "Profile Picture",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.border(
+                2.dp,
+                MaterialTheme.colorScheme.primary,
+                RoundedCornerShape(20.dp),
+            )
+        )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Text(
+            text = "Bazis",
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onBackground,
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(
+            text = "tmp@hive.com",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
+        )
+    }
+}
