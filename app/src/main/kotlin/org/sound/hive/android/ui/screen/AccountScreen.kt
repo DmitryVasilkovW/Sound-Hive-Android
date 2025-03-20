@@ -10,6 +10,7 @@ import androidx.compose.ui.layout.*
 import androidx.compose.ui.res.*
 import androidx.compose.ui.tooling.preview.*
 import androidx.compose.ui.unit.*
+import androidx.constraintlayout.compose.*
 import androidx.navigation.*
 import androidx.navigation.compose.*
 import org.sound.hive.android.R
@@ -27,63 +28,79 @@ fun AccountScreenPreview() {
 @Composable
 fun AccountScreen(navController: NavController) {
     SoundHiveAndroid {
-        Column(
+        ConstraintLayout(
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
-                .padding(16.dp),
+                .padding(16.dp)
         ) {
-            AccountHeader(navController)
+            val (header, avatar, name, email) = createRefs()
 
-            Spacer(modifier = Modifier.height(16.dp))
+            AccountHeader(
+                navController,
+                modifier = Modifier.constrainAs(header) {
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
+            )
 
-            AccountInfoSection()
+            Image(
+                painter = painterResource(R.drawable.ic_avatar_default),
+                contentDescription = "Profile Picture",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .border(
+                        2.dp,
+                        MaterialTheme.colorScheme.primary,
+                        RoundedCornerShape(20.dp)
+                    )
+                    .constrainAs(avatar) {
+                        top.linkTo(header.bottom, margin = 16.dp)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    }
+            )
+
+            Text(
+                text = "Bazis",
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onBackground,
+                modifier = Modifier.constrainAs(name) {
+                    top.linkTo(avatar.bottom, margin = 12.dp)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
+            )
+
+            Text(
+                text = "tmp@hive.com",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
+                modifier = Modifier.constrainAs(email) {
+                    top.linkTo(name.bottom, margin = 8.dp)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
+            )
         }
     }
 }
 
 @Composable
-private fun AccountHeader(navController: NavController) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
+private fun AccountHeader(navController: NavController, modifier: Modifier = Modifier) {
+    ConstraintLayout(
+        modifier = modifier.fillMaxWidth()
     ) {
-        ScreenHeaderWithSettings(navController, stringResource(R.string.account_title))
-    }
-}
+        val header = createRef()
 
-@Composable
-private fun AccountInfoSection() {
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Image(
-            painter = painterResource(R.drawable.ic_avatar_default),
-            contentDescription = "Profile Picture",
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.border(
-                2.dp,
-                MaterialTheme.colorScheme.primary,
-                RoundedCornerShape(20.dp),
-            )
-        )
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        Text(
-            text = "Bazis",
-            style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.onBackground,
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Text(
-            text = "tmp@hive.com",
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
+        ScreenHeaderWithSettings(
+            navController,
+            stringResource(R.string.account_title),
+            modifier = Modifier.constrainAs(header) {
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            }
         )
     }
 }

@@ -15,9 +15,10 @@ import androidx.navigation.*
 fun ScreenHeaderWithSettings(
     navController: NavController,
     title: String,
+    modifier: Modifier
 ) {
     Column(
-        modifier = Modifier.padding(
+        modifier = modifier.padding(
             top = 16.dp,
             bottom = 6.dp,
             start = 16.dp,
