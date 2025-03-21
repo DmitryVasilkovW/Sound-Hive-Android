@@ -2,28 +2,23 @@ package org.sound.hive.android.ui.screen
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
+import androidx.compose.ui.draw.*
+import androidx.compose.ui.layout.*
+import androidx.compose.ui.res.*
+import androidx.compose.ui.tooling.preview.*
+import androidx.compose.ui.unit.*
+import androidx.navigation.*
+import androidx.navigation.compose.*
 import org.sound.hive.android.R
-import org.sound.hive.android.model.Friend
-import org.sound.hive.android.ui.common.favoritesRoute
-import org.sound.hive.android.ui.common.historyRoute
-import org.sound.hive.android.ui.element.FriendItem
-import org.sound.hive.android.ui.theme.SoundHiveAndroid
+import org.sound.hive.android.model.*
+import org.sound.hive.android.ui.common.*
+import org.sound.hive.android.ui.element.*
+import org.sound.hive.android.ui.theme.*
 
 @Composable
 @Preview
@@ -44,7 +39,7 @@ fun HomeScreen(navController: NavController) {
         ) {
             HomeHeader()
 
-            ImageRow()
+            ImageRow(navController)
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -59,18 +54,12 @@ private fun HomeHeader() {
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.End,
     ) {
-        IconButton(onClick = {}) {
-            Icon(
-                painter = painterResource(R.drawable.ic_settings),
-                contentDescription = "Settings",
-                tint = MaterialTheme.colorScheme.onBackground,
-            )
-        }
+        SettingsButton()
     }
 }
 
 @Composable
-private fun ImageRow() {
+private fun ImageRow(navController: NavController) {
     Row(modifier = Modifier.fillMaxWidth()) {
         val imageModifier = Modifier
             .weight(1f)
@@ -86,11 +75,24 @@ private fun ImageRow() {
 
         Spacer(modifier = Modifier.width(16.dp))
 
+        AccountRow(imageModifier, navController)
+    }
+}
+
+@Composable
+private fun AccountRow(modifier: Modifier, navController: NavController) {
+    Box(
+        modifier = modifier
+            .clickable {
+                navController.navigate(accountRoute)
+            },
+        contentAlignment = Alignment.Center,
+    ) {
         Image(
             painter = painterResource(R.drawable.ic_avatar_default),
             contentDescription = "Profile Picture",
             contentScale = ContentScale.Crop,
-            modifier = imageModifier.border(
+            modifier = modifier.border(
                 2.dp,
                 MaterialTheme.colorScheme.primary,
                 RoundedCornerShape(20.dp),
@@ -137,11 +139,25 @@ private fun FavoritesBox(modifier: Modifier, navController: NavController) {
             },
         contentAlignment = Alignment.Center
     ) {
-        listOf(
-            Triple(Alignment.CenterEnd, 225f, Modifier.padding(25.dp).offset(y = (-15).dp)),
-            Triple(Alignment.BottomEnd, 290f, Modifier.padding(20.dp)),
-            Triple(Alignment.CenterStart, 135f, Modifier.padding(10.dp)),
-        ).forEach { (alignment, rotation, extraModifier) ->
+        val beeDecorationConfigs = listOf(
+            DecorationConfig(
+                alignment = Alignment.CenterEnd,
+                rotationDegrees = 225f,
+                modifier = Modifier.padding(25.dp).offset(y = (-15).dp)
+            ),
+            DecorationConfig(
+                alignment = Alignment.BottomEnd,
+                rotationDegrees = 290f,
+                modifier = Modifier.padding(20.dp)
+            ),
+            DecorationConfig(
+                alignment = Alignment.CenterStart,
+                rotationDegrees = 135f,
+                modifier = Modifier.padding(10.dp)
+            )
+        )
+
+        beeDecorationConfigs.forEach { (alignment, rotation, extraModifier) ->
             Image(
                 painter = painterResource(R.drawable.ic_bee_small),
                 contentDescription = "Bee Icon",
@@ -229,7 +245,7 @@ private fun FriendsBox(modifier: Modifier) {
 }
 
 @Composable
-fun HistoryBox(modifier: Modifier, navController: NavController) {
+private fun HistoryBox(modifier: Modifier, navController: NavController) {
     Box(
         modifier = modifier
             .background(
@@ -268,3 +284,9 @@ fun HistoryBox(modifier: Modifier, navController: NavController) {
         )
     }
 }
+
+private data class DecorationConfig(
+    val alignment: Alignment,
+    val rotationDegrees: Float,
+    val modifier: Modifier
+)

@@ -1,6 +1,6 @@
 package org.sound.hive.android.ui.common
 
-import org.sound.hive.android.R
+import org.sound.hive.android.*
 
 object FilterOptions {
     val historyFilters = listOf(

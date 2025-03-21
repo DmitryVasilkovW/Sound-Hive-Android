@@ -11,4 +11,5 @@
     <string name="artist_name_filter">By artist</string>
     <string name="album_title_filter">By album</string>
     <string name="add_date_filter">By add date</string>
+    <string name="account_title">Account</string>
 </resources>

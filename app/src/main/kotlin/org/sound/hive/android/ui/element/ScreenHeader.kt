@@ -1,29 +1,31 @@
 package org.sound.hive.android.ui.element
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.res.*
+import androidx.compose.ui.unit.*
+import androidx.navigation.*
+
+@Composable
+fun ScreenHeaderWithSettings(
+    navController: NavController,
+    title: String,
+    modifier: Modifier = Modifier
+) {
+    BaseScreenHeader(
+        navController = navController,
+        title = title,
+        modifier = modifier
+    ) {
+        SettingsButton()
+    }
+}
 
 @Composable
 fun ScreenHeaderWithFilterMenu(
@@ -31,10 +33,31 @@ fun ScreenHeaderWithFilterMenu(
     title: String,
     filterOptions: List<Int>,
     showFilterMenu: Boolean,
-    onFilterMenuChange: (Boolean) -> Unit
+    onFilterMenuChange: (Boolean) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    BaseScreenHeader(
+        navController = navController,
+        title = title,
+        modifier = modifier
+    ) {
+        FilterMenu(
+            filterOptions = filterOptions,
+            showMenu = showFilterMenu,
+            onMenuChange = onFilterMenuChange,
+        )
+    }
+}
+
+@Composable
+private fun BaseScreenHeader(
+    navController: NavController,
+    title: String,
+    modifier: Modifier = Modifier,
+    trailingContent: @Composable () -> Unit
 ) {
     Column(
-        modifier = Modifier.padding(
+        modifier = modifier.padding(
             top = 16.dp,
             bottom = 6.dp,
             start = 16.dp,
@@ -48,7 +71,7 @@ fun ScreenHeaderWithFilterMenu(
         ) {
             NavigationIcon(navController)
             ScreenTitle(title)
-            FilterMenu(filterOptions, showFilterMenu, onFilterMenuChange)
+            trailingContent()
         }
     }
 }
@@ -74,7 +97,7 @@ private fun FilterMenu(
             onDismissRequest = { onMenuChange(false) },
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.surface)
-                .dropdownMenuModifier(),
+                .padding(vertical = 2.dp),
         ) {
             filters.forEachIndexed { index, resId ->
                 FilterMenuItem(resId, index, filters.size)
@@ -88,11 +111,10 @@ private fun FilterMenuItem(resId: Int, index: Int, totalItems: Int) {
     DropdownMenuItem(
         text = { FilterMenuItemText(resId) },
         onClick = { },
-        modifier = Modifier.menuItemPadding(),
-        contentPadding = menuItemContentPadding()
+        modifier = Modifier.padding(horizontal = 6.dp),
+        contentPadding = PaddingValues(vertical = 2.dp)
     )
-
-    if (shouldAddDivider(index, totalItems)) {
+    if (index < totalItems - 1) {
         MenuDivider()
     }
 }
@@ -103,7 +125,7 @@ private fun FilterMenuItemText(resId: Int) {
         stringResource(resId),
         style = MaterialTheme.typography.bodySmall,
         color = MaterialTheme.colorScheme.onBackground,
-        modifier = Modifier.textPadding(),
+        modifier = Modifier.padding(horizontal = 6.dp),
     )
 }
 
@@ -112,18 +134,6 @@ private fun MenuDivider() {
     HorizontalDivider(
         thickness = 0.5.dp,
         color = MaterialTheme.colorScheme.outline.copy(alpha = 0.2f),
-        modifier = Modifier.dividerPadding(),
+        modifier = Modifier.padding(horizontal = 2.dp),
     )
 }
-
-private fun Modifier.dropdownMenuModifier() = this.padding(vertical = 2.dp)
-
-private fun Modifier.menuItemPadding() = this.padding(horizontal = 6.dp)
-
-private fun Modifier.textPadding() = this.padding(horizontal = 6.dp)
-
-private fun Modifier.dividerPadding() = this.padding(horizontal = 2.dp)
-
-private fun menuItemContentPadding() = PaddingValues(vertical = 2.dp)
-
-private fun shouldAddDivider(index: Int, total: Int) = index < total - 1

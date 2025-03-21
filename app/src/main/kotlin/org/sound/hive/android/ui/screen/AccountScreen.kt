@@ -6,77 +6,120 @@ import androidx.compose.foundation.shape.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
-import androidx.compose.ui.draw.*
-import androidx.compose.ui.graphics.*
+import androidx.compose.ui.layout.*
 import androidx.compose.ui.res.*
-import androidx.compose.ui.text.font.*
 import androidx.compose.ui.tooling.preview.*
 import androidx.compose.ui.unit.*
+import androidx.constraintlayout.compose.*
 import androidx.navigation.*
 import androidx.navigation.compose.*
 import org.sound.hive.android.R
+import org.sound.hive.android.ui.element.*
+import org.sound.hive.android.ui.theme.*
 
 @Composable
 @Preview
 fun AccountScreenPreview() {
-    AccountScreen(rememberNavController())
+    SoundHiveAndroid {
+        AccountScreen(rememberNavController())
+    }
 }
 
 @Composable
 fun AccountScreen(navController: NavController) {
-    val user = User("ты", "pochta@abc.com", R.drawable.ic_launcher_background)
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Image(
-            painter = painterResource(id = user.profilePicture),
-            contentDescription = "Profile Picture",
+    SoundHiveAndroid {
+        ConstraintLayout(
             modifier = Modifier
-                .size(120.dp)
-                .clip(CircleShape)
-                .border(2.dp, Color.Gray, CircleShape)
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Text(text = user.name, fontSize = 24.sp, fontWeight = FontWeight.Bold)
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Text(text = user.email, fontSize = 16.sp)
-
-        Spacer(modifier = Modifier.height(32.dp))
-
-        Button(
-            onClick = { },
-            modifier = Modifier.fillMaxWidth()
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+                .padding(16.dp)
         ) {
-            Text(text = "Редактировать профиль")
-        }
+            val (header, avatar, name, email) = createRefs()
 
-        Spacer(modifier = Modifier.height(16.dp))
+            AccountHeader(
+                navController = navController,
+                modifier = Modifier.constrainAs(header) {
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
+            )
 
-        Button(
-            onClick = { },
-            modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
-        ) {
-            Text(text = "Выйти", color = Color.White)
-        }
+            AccountAvatar(
+                modifier = Modifier.constrainAs(avatar) {
+                    top.linkTo(header.bottom, margin = 16.dp)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
+            )
 
-        Spacer(modifier = Modifier.height(16.dp))
+            AccountName(
+                name = "Bazis",
+                modifier = Modifier.constrainAs(name) {
+                    top.linkTo(avatar.bottom, margin = 12.dp)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
+            )
 
-        Button(
-            onClick = { navController.popBackStack() },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(text = "Назад")
+            AccountEmail(
+                email = "tmp@hive.com",
+                modifier = Modifier.constrainAs(email) {
+                    top.linkTo(name.bottom, margin = 8.dp)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
+            )
         }
     }
 }
 
-data class User(val name: String, val email: String, val profilePicture: Int)
+@Composable
+private fun AccountHeader(navController: NavController, modifier: Modifier = Modifier) {
+    ConstraintLayout(modifier = modifier.fillMaxWidth()) {
+        val header = createRef()
+        ScreenHeaderWithSettings(
+            navController = navController,
+            title = stringResource(R.string.account_title),
+            modifier = Modifier.constrainAs(header) {
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            }
+        )
+    }
+}
+
+@Composable
+private fun AccountAvatar(modifier: Modifier = Modifier) {
+    Image(
+        painter = painterResource(R.drawable.ic_avatar_default),
+        contentDescription = "Profile Picture",
+        contentScale = ContentScale.Crop,
+        modifier = modifier
+            .border(
+                2.dp,
+                MaterialTheme.colorScheme.primary,
+                RoundedCornerShape(20.dp)
+            )
+    )
+}
+
+@Composable
+private fun AccountName(name: String, modifier: Modifier = Modifier) {
+    Text(
+        text = name,
+        style = MaterialTheme.typography.titleMedium,
+        color = MaterialTheme.colorScheme.onBackground,
+        modifier = modifier
+    )
+}
+
+@Composable
+private fun AccountEmail(email: String, modifier: Modifier = Modifier) {
+    Text(
+        text = email,
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
+        modifier = modifier
+    )
+}
