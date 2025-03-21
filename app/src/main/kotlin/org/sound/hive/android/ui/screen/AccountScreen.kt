@@ -37,7 +37,7 @@ fun AccountScreen(navController: NavController) {
             val (header, avatar, name, email) = createRefs()
 
             AccountHeader(
-                navController,
+                navController = navController,
                 modifier = Modifier.constrainAs(header) {
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)
@@ -45,27 +45,16 @@ fun AccountScreen(navController: NavController) {
                 }
             )
 
-            Image(
-                painter = painterResource(R.drawable.ic_avatar_default),
-                contentDescription = "Profile Picture",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .border(
-                        2.dp,
-                        MaterialTheme.colorScheme.primary,
-                        RoundedCornerShape(20.dp)
-                    )
-                    .constrainAs(avatar) {
-                        top.linkTo(header.bottom, margin = 16.dp)
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                    }
+            AccountAvatar(
+                modifier = Modifier.constrainAs(avatar) {
+                    top.linkTo(header.bottom, margin = 16.dp)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
             )
 
-            Text(
-                text = "Bazis",
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onBackground,
+            AccountName(
+                name = "Bazis",
                 modifier = Modifier.constrainAs(name) {
                     top.linkTo(avatar.bottom, margin = 12.dp)
                     start.linkTo(parent.start)
@@ -73,10 +62,8 @@ fun AccountScreen(navController: NavController) {
                 }
             )
 
-            Text(
-                text = "tmp@hive.com",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
+            AccountEmail(
+                email = "tmp@hive.com",
                 modifier = Modifier.constrainAs(email) {
                     top.linkTo(name.bottom, margin = 8.dp)
                     start.linkTo(parent.start)
@@ -89,18 +76,50 @@ fun AccountScreen(navController: NavController) {
 
 @Composable
 private fun AccountHeader(navController: NavController, modifier: Modifier = Modifier) {
-    ConstraintLayout(
-        modifier = modifier.fillMaxWidth()
-    ) {
+    ConstraintLayout(modifier = modifier.fillMaxWidth()) {
         val header = createRef()
-
         ScreenHeaderWithSettings(
-            navController,
-            stringResource(R.string.account_title),
+            navController = navController,
+            title = stringResource(R.string.account_title),
             modifier = Modifier.constrainAs(header) {
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
             }
         )
     }
+}
+
+@Composable
+private fun AccountAvatar(modifier: Modifier = Modifier) {
+    Image(
+        painter = painterResource(R.drawable.ic_avatar_default),
+        contentDescription = "Profile Picture",
+        contentScale = ContentScale.Crop,
+        modifier = modifier
+            .border(
+                2.dp,
+                MaterialTheme.colorScheme.primary,
+                RoundedCornerShape(20.dp)
+            )
+    )
+}
+
+@Composable
+private fun AccountName(name: String, modifier: Modifier = Modifier) {
+    Text(
+        text = name,
+        style = MaterialTheme.typography.titleMedium,
+        color = MaterialTheme.colorScheme.onBackground,
+        modifier = modifier
+    )
+}
+
+@Composable
+private fun AccountEmail(email: String, modifier: Modifier = Modifier) {
+    Text(
+        text = email,
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
+        modifier = modifier
+    )
 }
