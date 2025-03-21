@@ -10,10 +10,8 @@ fun SongList() {
     val songs = remember { songsExample }
 
     LazyColumn(modifier = Modifier.fillMaxSize()) {
-        itemsIndexed(songs) { _, songList ->
-            for ((index, song) in songList.withIndex()) {
-                SongItem(song = song, index = index + 1)
-            }
+        itemsIndexed(songs) { index, song ->
+            SongItem(song = song, index = index + 1)
         }
     }
 }
