@@ -6,6 +6,7 @@ import androidx.compose.foundation.shape.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.*
 import androidx.compose.ui.layout.*
 import androidx.compose.ui.res.*
@@ -14,7 +15,7 @@ import org.sound.hive.android.R
 import org.sound.hive.android.model.*
 
 @Composable
-fun SongItem(song: Song, index: Int) {
+fun SongItem(song: Song, index: Int, onCoverClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -40,6 +41,7 @@ fun SongItem(song: Song, index: Int) {
             modifier = Modifier
                 .size(45.dp)
                 .clip(RoundedCornerShape(8.dp))
+                .clickable { onCoverClick() }
         )
 
         Spacer(modifier = Modifier.width(16.dp))

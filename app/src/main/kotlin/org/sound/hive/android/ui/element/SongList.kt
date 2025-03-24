@@ -6,12 +6,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.*
 
 @Composable
-fun SongList() {
+fun SongList(onSongClick: () -> Unit) {
     val songs = remember { songsExample }
 
     LazyColumn(modifier = Modifier.fillMaxSize()) {
         itemsIndexed(songs) { index, song ->
-            SongItem(song = song, index = index + 1)
+            SongItem(song = song, index = index + 1, onSongClick)
         }
     }
 }

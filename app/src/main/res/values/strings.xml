@@ -12,4 +12,5 @@
     <string name="album_title_filter">By album</string>
     <string name="add_date_filter">By add date</string>
     <string name="account_title">Account</string>
+    <string name="dark_side_of_the_moon" translatable="false">Dark side of the moon</string>
 </resources>
