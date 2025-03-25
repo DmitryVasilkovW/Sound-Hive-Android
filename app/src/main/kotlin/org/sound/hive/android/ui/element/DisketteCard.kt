@@ -19,9 +19,13 @@ import org.sound.hive.android.R
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.layout.ContentScale
 
 @Preview
 @Composable
@@ -33,6 +37,16 @@ fun DisketteCard(modifier: Modifier = Modifier) {
             .background(colorResource(R.color.saffronYellow))
             .border(2.dp, Color.Black, RoundedCornerShape(16.dp))
     ) {
+        Image(
+            painter = painterResource(id = R.drawable.diskette_effect),
+            contentDescription = "Preview Overlay",
+            modifier = Modifier
+                .size(400.dp, 400.dp)
+                .alpha(1f),
+            contentScale = ContentScale.FillBounds,
+            //colorFilter = ColorFilter.tint(Color.Black.copy(alpha = 0.1f))
+        )
+
         Image(
             painter = painterResource(id = R.drawable.panchiko),
             contentDescription = "Album Art",
@@ -47,16 +61,27 @@ fun DisketteCard(modifier: Modifier = Modifier) {
                 .size(60.dp)
                 .align(Alignment.Center)
         ) {
-            drawCircle(Color.Gray)
+            drawCircle(
+                color = Color.Transparent,
+                radius = size.minDimension / 2,
+                blendMode = BlendMode.Clear
+            )
+
+            drawCircle(
+                Color.Black,
+                style = Stroke(width = 4.dp.toPx()),
+            )
         }
 
         Box(
             modifier = Modifier
-                .width(15.dp)
-                .height(50.dp)
-                .background(Color.Black)
+                .width(20.dp)
+                .height(100.dp)
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 16.dp)
+                .clip(RoundedCornerShape(16.dp))
+                .border(2.dp, Color.Black, RoundedCornerShape(16.dp))
+                .background(Color.DarkGray)
         )
 
         Box(
