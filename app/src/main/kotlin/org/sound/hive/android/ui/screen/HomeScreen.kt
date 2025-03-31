@@ -12,13 +12,17 @@ import androidx.compose.ui.layout.*
 import androidx.compose.ui.res.*
 import androidx.compose.ui.tooling.preview.*
 import androidx.compose.ui.unit.*
+import androidx.hilt.navigation.compose.*
+import androidx.lifecycle.compose.*
 import androidx.navigation.*
 import androidx.navigation.compose.*
 import org.sound.hive.android.R
+import org.sound.hive.android.effect.*
+import org.sound.hive.android.intent.*
 import org.sound.hive.android.model.*
-import org.sound.hive.android.ui.common.*
 import org.sound.hive.android.ui.element.*
 import org.sound.hive.android.ui.theme.*
+import org.sound.hive.android.viewModel.home.HomeViewModel
 
 @Composable
 @Preview
@@ -29,7 +33,22 @@ fun HomeScreenPreview() {
 }
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(
+    navController: NavController,
+    viewModel: HomeViewModel = hiltViewModel()
+) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(key1 = Unit) {
+        viewModel.sideEffect.collect { sideEffect ->
+            when (sideEffect) {
+                is HomeSideEffect.Navigate -> {
+                    navController.navigate(sideEffect.route)
+                }
+            }
+        }
+    }
+
     SoundHiveAndroid {
         Column(
             modifier = Modifier
@@ -39,11 +58,18 @@ fun HomeScreen(navController: NavController) {
         ) {
             HomeHeader()
 
-            ImageRow(navController)
+            ImageRow(
+                albumCoverResId = state.albumCoverResId,
+                onAccountClick = { viewModel.processIntent(HomeIntent.NavigateToAccount) }
+            )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            BoxesSection(navController)
+            BoxesSection(
+                friends = state.friends,
+                onHistoryClick = { viewModel.processIntent(HomeIntent.NavigateToHistory) },
+                onFavoritesClick = { viewModel.processIntent(HomeIntent.NavigateToFavorites) }
+            )
         }
     }
 }
@@ -59,7 +85,10 @@ private fun HomeHeader() {
 }
 
 @Composable
-private fun ImageRow(navController: NavController) {
+private fun ImageRow(
+    albumCoverResId: Int,
+    onAccountClick: () -> Unit
+) {
     Row(modifier = Modifier.fillMaxWidth()) {
         val imageModifier = Modifier
             .weight(1f)
@@ -67,7 +96,7 @@ private fun ImageRow(navController: NavController) {
             .clip(RoundedCornerShape(20.dp))
 
         Image(
-            painter = painterResource(R.drawable.velvet_underground_and_nico),
+            painter = painterResource(albumCoverResId),
             contentDescription = "Album Cover",
             contentScale = ContentScale.Crop,
             modifier = imageModifier,
@@ -75,17 +104,18 @@ private fun ImageRow(navController: NavController) {
 
         Spacer(modifier = Modifier.width(16.dp))
 
-        AccountRow(imageModifier, navController)
+        AccountRow(imageModifier, onAccountClick)
     }
 }
 
 @Composable
-private fun AccountRow(modifier: Modifier, navController: NavController) {
+private fun AccountRow(
+    modifier: Modifier,
+    onAccountClick: () -> Unit
+) {
     Box(
         modifier = modifier
-            .clickable {
-                navController.navigate(accountRoute)
-            },
+            .clickable(onClick = onAccountClick),
         contentAlignment = Alignment.Center,
     ) {
         Image(
@@ -102,7 +132,11 @@ private fun AccountRow(modifier: Modifier, navController: NavController) {
 }
 
 @Composable
-private fun BoxesSection(navController: NavController) {
+private fun BoxesSection(
+    friends: List<Friend>,
+    onHistoryClick: () -> Unit,
+    onFavoritesClick: () -> Unit
+) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -115,28 +149,30 @@ private fun BoxesSection(navController: NavController) {
                 .weight(1f)
                 .aspectRatio(1f)
 
-            HistoryBox(boxModifier, navController)
-            FavoritesBox(boxModifier, navController)
+            HistoryBox(boxModifier, onHistoryClick)
+            FavoritesBox(boxModifier, onFavoritesClick)
         }
         FriendsBox(
             Modifier
                 .fillMaxWidth()
                 .weight(1f),
+            friends = friends
         )
     }
 }
 
 @Composable
-private fun FavoritesBox(modifier: Modifier, navController: NavController) {
+private fun FavoritesBox(
+    modifier: Modifier,
+    onFavoritesClick: () -> Unit
+) {
     Box(
         modifier = modifier
             .background(
                 MaterialTheme.colorScheme.secondary,
                 shape = RoundedCornerShape(20.dp),
             )
-            .clickable {
-                navController.navigate(favoritesRoute)
-            },
+            .clickable(onClick = onFavoritesClick),
         contentAlignment = Alignment.Center
     ) {
         val beeDecorationConfigs = listOf(
@@ -190,24 +226,10 @@ private fun FavoritesBox(modifier: Modifier, navController: NavController) {
 }
 
 @Composable
-private fun FriendsBox(modifier: Modifier) {
-    val friendsList = remember {
-        listOf(
-            Friend(
-                photoResId = R.drawable.ic_avatar_default_light,
-                name = "Alice",
-                song = "Honestly?",
-                artist = "American Football",
-            ),
-            Friend(
-                photoResId = R.drawable.ic_avatar_default_light,
-                name = "Bob",
-                song = "Gonna Leave You",
-                artist = "Queens of the Stone Age",
-            ),
-        )
-    }
-
+private fun FriendsBox(
+    modifier: Modifier,
+    friends: List<Friend>
+) {
     Box(
         modifier = modifier
             .background(
@@ -236,7 +258,7 @@ private fun FriendsBox(modifier: Modifier) {
             )
 
             LazyColumn(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                items(friendsList) { friend ->
+                items(friends) { friend ->
                     FriendItem(friend)
                 }
             }
@@ -245,16 +267,17 @@ private fun FriendsBox(modifier: Modifier) {
 }
 
 @Composable
-private fun HistoryBox(modifier: Modifier, navController: NavController) {
+private fun HistoryBox(
+    modifier: Modifier,
+    onHistoryClick: () -> Unit
+) {
     Box(
         modifier = modifier
             .background(
                 color = MaterialTheme.colorScheme.secondary,
                 shape = RoundedCornerShape(20.dp),
             )
-            .clickable {
-                navController.navigate(historyRoute)
-            },
+            .clickable(onClick = onHistoryClick),
         contentAlignment = Alignment.Center,
     ) {
         Image(

@@ -6,9 +6,11 @@ import androidx.activity.compose.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.tooling.preview.*
 import androidx.navigation.compose.*
+import dagger.hilt.android.AndroidEntryPoint
 import org.sound.hive.android.ui.common.*
 import org.sound.hive.android.ui.screen.*
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
