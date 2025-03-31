@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Sound-Hive-Android</string>
+    <string name="favorites_name">Избранное</string>
+    <string name="history_name">История</string>
+    <string name="friends_name">Друзья</string>
+    <string name="last_listened_filter">Последнее прослушанное</string>
+    <string name="top_month_filter">Топ месяца</string>
+    <string name="top_year_filter">Топ за год</string>
+    <string name="top_all_time_filter">Топ за все время</string>
+    <string name="song_title_filter">По песне</string>
+    <string name="artist_name_filter">По артисту</string>
+    <string name="album_title_filter">По альбому</string>
+    <string name="add_date_filter">По дате добавления</string>
+    <string name="account_title">Аккаунт</string>
+</resources>

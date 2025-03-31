@@ -1,4 +1,6 @@
 package org.sound.hive.android.ui.common
 
-val ACCOUNT = "account"
-val HOME = "home"
+const val accountRoute = "accountRoute"
+const val homeRoute = "homeRoute"
+const val historyRoute = "historyRoute"
+const val favoritesRoute = "favoritesRoute"
