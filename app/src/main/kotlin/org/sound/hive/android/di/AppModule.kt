@@ -1,12 +1,11 @@
 package org.sound.hive.android.di
 
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
-import org.sound.hive.android.data.repository.FriendsRepository
-import org.sound.hive.android.data.repository.FriendsRepositoryImpl
+import dagger.*
+import dagger.hilt.*
+import dagger.hilt.components.*
+import org.sound.hive.android.data.repository.*
+import org.sound.hive.android.data.repository.impl.*
+import javax.inject.*
 
 
 @Module
@@ -16,4 +15,8 @@ object AppModule {
     @Provides
     @Singleton
     fun provideFriendsRepository(): FriendsRepository = FriendsRepositoryImpl()
+
+    @Provides
+    @Singleton
+    fun providUserRepository(): UserRepository = UserRepositoryImpl()
 }

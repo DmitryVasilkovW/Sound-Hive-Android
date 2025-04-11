@@ -11,11 +11,14 @@ import androidx.compose.ui.res.*
 import androidx.compose.ui.tooling.preview.*
 import androidx.compose.ui.unit.*
 import androidx.constraintlayout.compose.*
+import androidx.hilt.navigation.compose.*
+import androidx.lifecycle.compose.*
 import androidx.navigation.*
 import androidx.navigation.compose.*
 import org.sound.hive.android.R
 import org.sound.hive.android.ui.element.*
 import org.sound.hive.android.ui.theme.*
+import org.sound.hive.android.viewModel.account.*
 
 @Composable
 @Preview
@@ -26,7 +29,12 @@ fun AccountScreenPreview() {
 }
 
 @Composable
-fun AccountScreen(navController: NavController) {
+fun AccountScreen(
+    navController: NavController,
+    viewModel: AccountViewModel = hiltViewModel()
+) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
+
     SoundHiveAndroid {
         ConstraintLayout(
             modifier = Modifier
@@ -50,11 +58,12 @@ fun AccountScreen(navController: NavController) {
                     top.linkTo(header.bottom, margin = 16.dp)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
-                }
+                },
+                avatarId = state.user.avatarId
             )
 
             AccountName(
-                name = "Bazis",
+                name = state.user.name,
                 modifier = Modifier.constrainAs(name) {
                     top.linkTo(avatar.bottom, margin = 12.dp)
                     start.linkTo(parent.start)
@@ -63,7 +72,7 @@ fun AccountScreen(navController: NavController) {
             )
 
             AccountEmail(
-                email = "tmp@hive.com",
+                email = state.user.email,
                 modifier = Modifier.constrainAs(email) {
                     top.linkTo(name.bottom, margin = 8.dp)
                     start.linkTo(parent.start)
@@ -90,9 +99,9 @@ private fun AccountHeader(navController: NavController, modifier: Modifier = Mod
 }
 
 @Composable
-private fun AccountAvatar(modifier: Modifier = Modifier) {
+private fun AccountAvatar(modifier: Modifier = Modifier, avatarId: Int) {
     Image(
-        painter = painterResource(R.drawable.ic_avatar_default),
+        painter = painterResource(avatarId),
         contentDescription = "Profile Picture",
         contentScale = ContentScale.Crop,
         modifier = modifier
