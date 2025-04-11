@@ -7,6 +7,8 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import org.sound.hive.android.data.repository.FriendsRepository
 import org.sound.hive.android.data.repository.FriendsRepositoryImpl
+import org.sound.hive.android.data.repository.SongsRepository
+import org.sound.hive.android.data.repository.SongsRepositoryImpl
 
 
 @Module
@@ -16,4 +18,8 @@ object AppModule {
     @Provides
     @Singleton
     fun provideFriendsRepository(): FriendsRepository = FriendsRepositoryImpl()
+
+    @Provides
+    @Singleton
+    fun provideSongsRepository(): SongsRepository = SongsRepositoryImpl()
 }

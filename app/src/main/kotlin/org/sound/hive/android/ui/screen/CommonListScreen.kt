@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
+import androidx.lifecycle.ViewModel
 import androidx.navigation.*
 import org.sound.hive.android.ui.element.*
 import org.sound.hive.android.ui.theme.*
@@ -14,7 +15,8 @@ fun CommonListScreen(
     navController: NavController,
     title: String,
     filterOptions: List<Int>,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
+    //viewModel: ViewModel,
 ) {
     var showFilterMenu by remember { mutableStateOf(false) }
 
