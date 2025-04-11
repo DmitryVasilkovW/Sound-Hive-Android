@@ -42,7 +42,7 @@ class HistoryViewModel @Inject constructor(
         val action = when (intent) {
             is HistoryIntent.LoadInitialData -> HistoryAction.LoadInitialData
             is HistoryIntent.NavigateToHome -> HistoryAction.Navigate(homeRoute)
-            is HistoryIntent.UseFilters -> HistoryAction.UseFilter("By Song")
+            is HistoryIntent.UseFilters -> HistoryAction.UseFilter("Last listened")
         }
 
         processAction(action)
