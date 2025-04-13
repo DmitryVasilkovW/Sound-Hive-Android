@@ -8,7 +8,7 @@ import androidx.compose.ui.*
 import androidx.navigation.*
 import org.sound.hive.android.ui.element.*
 import org.sound.hive.android.ui.sheets.*
-import org.sound.hive.android.viewModel.abstracts.BaseViewModel
+import org.sound.hive.android.viewModel.abstracts.SongListScreenViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -16,7 +16,7 @@ fun ListScreenWithDiskette(
     navController: NavController,
     title: String,
     filterOptions: List<Int>,
-    viewModel: BaseViewModel,
+    viewModel: SongListScreenViewModel,
 ) {
     var showDiskette by remember { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState()

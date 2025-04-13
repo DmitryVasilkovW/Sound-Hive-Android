@@ -5,12 +5,12 @@ import androidx.compose.foundation.lazy.*
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
-import org.sound.hive.android.viewModel.abstracts.BaseViewModel
+import org.sound.hive.android.viewModel.abstracts.SongListScreenViewModel
 
 @Composable
 fun SongList(
     onSongClick: () -> Unit,
-    viewModel: BaseViewModel
+    viewModel: SongListScreenViewModel
 ) {
     val state by viewModel.state.collectAsState()
     val songs = state.songs
