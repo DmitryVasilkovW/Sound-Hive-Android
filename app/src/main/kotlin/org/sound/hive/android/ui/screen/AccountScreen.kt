@@ -16,6 +16,8 @@ import androidx.lifecycle.compose.*
 import androidx.navigation.*
 import androidx.navigation.compose.*
 import org.sound.hive.android.R
+import org.sound.hive.android.effect.AccountSideEffect
+import org.sound.hive.android.intent.AccountIntent
 import org.sound.hive.android.ui.element.*
 import org.sound.hive.android.ui.theme.*
 import org.sound.hive.android.viewModel.AccountViewModel
@@ -35,6 +37,16 @@ fun AccountScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
+    LaunchedEffect(key1 = Unit) {
+        viewModel.sideEffect.collect { sideEffect ->
+            when (sideEffect) {
+                is AccountSideEffect.NavigateBack -> {
+                    navController.navigate(sideEffect.route)
+                }
+            }
+        }
+    }
+
     SoundHiveAndroid {
         ConstraintLayout(
             modifier = Modifier
@@ -45,13 +57,14 @@ fun AccountScreen(
             val (header, avatar, name, email) = createRefs()
 
             AccountHeader(
-                navController = navController,
                 modifier = Modifier.constrainAs(header) {
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 }
-            )
+            ) {
+                viewModel.processIntent(AccountIntent.NavigateBack)
+            }
 
             AccountAvatar(
                 modifier = Modifier.constrainAs(avatar) {
@@ -84,16 +97,19 @@ fun AccountScreen(
 }
 
 @Composable
-private fun AccountHeader(navController: NavController, modifier: Modifier = Modifier) {
+private fun AccountHeader(
+    modifier: Modifier = Modifier,
+    processNavigateBackIcon: () -> Unit
+) {
     ConstraintLayout(modifier = modifier.fillMaxWidth()) {
         val header = createRef()
         ScreenHeaderWithSettings(
-            navController = navController,
             title = stringResource(R.string.account_title),
             modifier = Modifier.constrainAs(header) {
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
-            }
+            },
+            processNavigateBackIcon = { processNavigateBackIcon() }
         )
     }
 }

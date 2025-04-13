@@ -13,10 +13,10 @@ import org.sound.hive.android.viewModel.abstracts.SongListScreenViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListScreenWithDiskette(
-    navController: NavController,
     title: String,
     filterOptions: List<Int>,
     viewModel: SongListScreenViewModel,
+    processNavigateBackIcon: () -> Unit,
 ) {
     var showDiskette by remember { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState()
@@ -29,9 +29,9 @@ fun ListScreenWithDiskette(
     }
 
     CommonListScreen(
-        navController = navController,
         title = title,
         filterOptions = filterOptions,
+        processNavigateBackIcon = { processNavigateBackIcon() }
     ) {
         Column(
             modifier = Modifier.fillMaxSize()

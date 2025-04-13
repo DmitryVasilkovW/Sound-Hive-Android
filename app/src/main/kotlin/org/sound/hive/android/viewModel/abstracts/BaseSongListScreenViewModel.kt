@@ -14,19 +14,18 @@ import org.sound.hive.android.model.SongListScreenState
 import org.sound.hive.android.data.repository.SongsRepository
 
 abstract class BaseSongListScreenViewModel<Intent, Action>(
-    protected val songsRepository: SongsRepository
+    protected val songsRepository: SongsRepository,
 ) : ViewModel(), SongListScreenViewModel {
 
     protected val stateMutable = MutableStateFlow(SongListScreenState())
     override val state: StateFlow<SongListScreenState> = stateMutable.asStateFlow()
 
-    protected val sideEffectMutable = MutableSharedFlow<HomeSideEffect>()
-
     override fun getSongs(): List<Song> = songsRepository.getSongs()
 
-    override suspend fun processIntent(intent: Any) {
+    override fun processIntent(intent: Any) {
         @Suppress("UNCHECKED_CAST")
-        processIntentInternal(intent as Intent)
+        val action = processIntentInternal(intent as Intent)
+        processAction(action)
     }
 
     protected abstract fun processIntentInternal(intent: Intent): Action
@@ -53,9 +52,5 @@ abstract class BaseSongListScreenViewModel<Intent, Action>(
         }
     }
 
-    protected fun navigate(route: String) {
-        viewModelScope.launch {
-            sideEffectMutable.emit(HomeSideEffect.Navigate(route))
-        }
-    }
+    protected abstract fun navigate();
 }

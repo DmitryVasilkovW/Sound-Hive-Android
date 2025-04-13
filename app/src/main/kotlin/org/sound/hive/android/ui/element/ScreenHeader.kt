@@ -11,35 +11,36 @@ import androidx.compose.ui.*
 import androidx.compose.ui.res.*
 import androidx.compose.ui.unit.*
 import androidx.navigation.*
+import org.sound.hive.android.viewModel.AccountViewModel
+import kotlin.Unit
 
 @Composable
 fun ScreenHeaderWithSettings(
-    navController: NavController,
     title: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    processNavigateBackIcon: () -> Unit,
 ) {
     BaseScreenHeader(
-        navController = navController,
         title = title,
-        modifier = modifier
-    ) {
-        SettingsButton()
-    }
+        modifier = modifier,
+        trailingContent = { SettingsButton() },
+        processNavigateBackIcon = { processNavigateBackIcon() }
+    )
 }
 
 @Composable
 fun ScreenHeaderWithFilterMenu(
-    navController: NavController,
     title: String,
     filterOptions: List<Int>,
     showFilterMenu: Boolean,
+    modifier: Modifier = Modifier,
     onFilterMenuChange: (Boolean) -> Unit,
-    modifier: Modifier = Modifier
+    processNavigateBackIcon: () -> Unit,
 ) {
     BaseScreenHeader(
-        navController = navController,
         title = title,
-        modifier = modifier
+        modifier = modifier,
+        processNavigateBackIcon = { processNavigateBackIcon() }
     ) {
         FilterMenu(
             filterOptions = filterOptions,
@@ -51,10 +52,10 @@ fun ScreenHeaderWithFilterMenu(
 
 @Composable
 private fun BaseScreenHeader(
-    navController: NavController,
     title: String,
     modifier: Modifier = Modifier,
-    trailingContent: @Composable () -> Unit
+    processNavigateBackIcon: () -> Unit,
+    trailingContent: @Composable () -> Unit,
 ) {
     Column(
         modifier = modifier.padding(
@@ -69,7 +70,9 @@ private fun BaseScreenHeader(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            NavigationIcon(navController)
+            NavigationIcon {
+                processNavigateBackIcon()
+            }
             ScreenTitle(title)
             trailingContent()
         }
