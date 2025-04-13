@@ -8,7 +8,7 @@ import androidx.compose.ui.*
 import androidx.navigation.*
 import org.sound.hive.android.ui.element.*
 import org.sound.hive.android.ui.sheets.*
-import org.sound.hive.android.viewModel.BaseViewModel
+import org.sound.hive.android.viewModel.abstracts.BaseViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

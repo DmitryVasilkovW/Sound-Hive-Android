@@ -9,7 +9,7 @@ import androidx.navigation.compose.*
 import org.sound.hive.android.R
 import org.sound.hive.android.ui.common.*
 import org.sound.hive.android.ui.theme.*
-import org.sound.hive.android.viewModel.history.HistoryViewModel
+import org.sound.hive.android.viewModel.HistoryViewModel
 
 @Composable
 @Preview

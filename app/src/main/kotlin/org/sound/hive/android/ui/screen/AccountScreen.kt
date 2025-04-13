@@ -18,7 +18,7 @@ import androidx.navigation.compose.*
 import org.sound.hive.android.R
 import org.sound.hive.android.ui.element.*
 import org.sound.hive.android.ui.theme.*
-import org.sound.hive.android.viewModel.account.*
+import org.sound.hive.android.viewModel.AccountViewModel
 
 @Composable
 @Preview

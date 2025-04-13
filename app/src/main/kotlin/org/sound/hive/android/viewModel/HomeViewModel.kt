@@ -1,4 +1,4 @@
-package org.sound.hive.android.viewModel.home
+package org.sound.hive.android.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

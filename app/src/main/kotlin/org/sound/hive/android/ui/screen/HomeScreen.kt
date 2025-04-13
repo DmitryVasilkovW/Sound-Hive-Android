@@ -22,7 +22,7 @@ import org.sound.hive.android.intent.*
 import org.sound.hive.android.model.*
 import org.sound.hive.android.ui.element.*
 import org.sound.hive.android.ui.theme.*
-import org.sound.hive.android.viewModel.home.HomeViewModel
+import org.sound.hive.android.viewModel.HomeViewModel
 
 @Composable
 @Preview

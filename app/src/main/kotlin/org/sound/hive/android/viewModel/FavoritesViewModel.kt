@@ -1,4 +1,4 @@
-package org.sound.hive.android.viewModel.favorites
+package org.sound.hive.android.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,17 +14,17 @@ import org.sound.hive.android.data.repository.SongsRepository
 import org.sound.hive.android.effect.HomeSideEffect
 import org.sound.hive.android.intent.FavoritesIntent
 import org.sound.hive.android.model.Song
-import org.sound.hive.android.model.favorites.FavoritesState
+import org.sound.hive.android.model.SongListScreenState
 import org.sound.hive.android.ui.common.homeRoute
-import org.sound.hive.android.viewModel.BaseViewModel
+import org.sound.hive.android.viewModel.abstracts.BaseViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class FavoritesViewModel @Inject constructor(
     private val songsRepository: SongsRepository
 ) : ViewModel(), BaseViewModel {
-    private val stateMutable = MutableStateFlow(FavoritesState())
-    val state: StateFlow<FavoritesState> = stateMutable.asStateFlow()
+    private val stateMutable = MutableStateFlow(SongListScreenState())
+    override val state: StateFlow<SongListScreenState> = stateMutable.asStateFlow()
 
     private val sideEffectMutable = MutableSharedFlow<HomeSideEffect>()
 
@@ -68,7 +68,7 @@ class FavoritesViewModel @Inject constructor(
     private fun loadSongs() {
         viewModelScope.launch {
             stateMutable.update { it.copy(isLoading = true) }
-            val songs = songsRepository.getSongs()
+            val songs = getSongs()
             stateMutable.update {
                 it.copy(
                     songs = songs,

@@ -1,15 +1,20 @@
-package org.sound.hive.android.viewModel.account
+package org.sound.hive.android.viewModel
 
-import androidx.lifecycle.*
-import dagger.hilt.android.lifecycle.*
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
-import org.sound.hive.android.action.*
-import org.sound.hive.android.data.repository.*
-import org.sound.hive.android.effect.*
-import org.sound.hive.android.intent.*
-import org.sound.hive.android.model.account.*
-import javax.inject.*
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import org.sound.hive.android.action.AccountAction
+import org.sound.hive.android.data.repository.UserRepository
+import org.sound.hive.android.effect.AccountSideEffect
+import org.sound.hive.android.intent.AccountIntent
+import org.sound.hive.android.model.account.AccountState
+import javax.inject.Inject
 
 @HiltViewModel
 class AccountViewModel @Inject constructor(
