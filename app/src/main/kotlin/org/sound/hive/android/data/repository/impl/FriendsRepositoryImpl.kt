@@ -1,9 +1,10 @@
-package org.sound.hive.android.data.repository
+package org.sound.hive.android.data.repository.impl
 
+import org.sound.hive.android.R
+import org.sound.hive.android.data.repository.FriendsRepository
+import org.sound.hive.android.model.Friend
 import javax.inject.Inject
 import javax.inject.Singleton
-import org.sound.hive.android.R
-import org.sound.hive.android.model.Friend
 
 @Singleton
 class FriendsRepositoryImpl @Inject constructor() : FriendsRepository {

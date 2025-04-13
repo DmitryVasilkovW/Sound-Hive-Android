@@ -84,23 +84,5 @@ class FavoritesViewModel @Inject constructor(
         }
     }
 
-    private fun useFilters(filterType: String) {
-        viewModelScope.launch {
-            stateMutable.update { it.copy(isLoading = true) }
-            var songs = emptyList<Song>()
-            songs = if (filterType == "By Song") {
-                songsRepository.getSongs().sortedBy { it.title }
-            } else if (filterType == "By artist") {
-                songsRepository.getSongs().sortedBy { it.artist }
-            } else {
-                songsRepository.getSongs().sortedBy { it.id }
-            }
-            stateMutable.update {
-                it.copy(
-                    songs = songs,
-                    isLoading = false
-                )
-            }
-        }
-    }
+    private fun useFilters(filterType: String) {}
 }
