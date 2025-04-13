@@ -1,17 +1,10 @@
 package org.sound.hive.android.viewModel.abstracts
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import org.sound.hive.android.effect.HomeSideEffect
-import org.sound.hive.android.model.Song
-import org.sound.hive.android.model.SongListScreenState
-import org.sound.hive.android.data.repository.SongsRepository
+import androidx.lifecycle.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
+import org.sound.hive.android.data.repository.*
+import org.sound.hive.android.model.*
 
 abstract class BaseSongListScreenViewModel<Intent, Action>(
     protected val songsRepository: SongsRepository,
@@ -52,5 +45,5 @@ abstract class BaseSongListScreenViewModel<Intent, Action>(
         }
     }
 
-    protected abstract fun navigate();
+    protected abstract fun navigate()
 }
