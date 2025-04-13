@@ -5,16 +5,15 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
-import androidx.navigation.*
 import org.sound.hive.android.ui.element.*
 import org.sound.hive.android.ui.theme.*
 
 @Composable
 fun CommonListScreen(
-    navController: NavController,
     title: String,
     filterOptions: List<Int>,
-    content: @Composable () -> Unit
+    processNavigateBackIcon: () -> Unit,
+    content: @Composable () -> Unit,
 ) {
     var showFilterMenu by remember { mutableStateOf(false) }
 
@@ -25,13 +24,11 @@ fun CommonListScreen(
                 .background(MaterialTheme.colorScheme.background)
         ) {
             ScreenHeaderWithFilterMenu(
-                navController = navController,
                 title = title,
                 filterOptions = filterOptions,
                 showFilterMenu = showFilterMenu,
-                onFilterMenuChange = {
-                    showFilterMenu = it
-                },
+                onFilterMenuChange = { showFilterMenu = it },
+                processNavigateBackIcon = { processNavigateBackIcon() }
             )
 
             content()
