@@ -18,5 +18,9 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providUserRepository(): UserRepository = UserRepositoryImpl()
+    fun provideUserRepository(): UserRepository = UserRepositoryImpl()
+
+    @Provides
+    @Singleton
+    fun provideSongsRepository(): SongsRepository = SongsRepositoryImpl()
 }
