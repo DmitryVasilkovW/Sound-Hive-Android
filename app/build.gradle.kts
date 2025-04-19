@@ -16,6 +16,12 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
+        manifestPlaceholders.putAll(
+            mapOf(
+                "redirectSchemeName" to "spotify-sdk",
+                "redirectHostName" to "auth"
+            )
+        )
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -70,6 +76,14 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.mviKotlin.main)
     implementation(libs.mviKotlin.extensions.coroutines)
+
+    implementation(libs.auth.v212)
+    implementation(libs.gson)
+
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.okhttp)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
 }
 
 kapt {
