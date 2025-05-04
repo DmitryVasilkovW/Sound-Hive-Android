@@ -16,7 +16,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven(url = "https://maven.spotify.com")
+//        maven(url = "https://maven.spotify.com")
     }
 }
 
