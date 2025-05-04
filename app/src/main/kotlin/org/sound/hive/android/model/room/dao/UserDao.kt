@@ -12,5 +12,5 @@ interface UserDao {
     val all: MutableList<UserEntity>?
 
     @Delete
-    fun delete(user: UserEntity?)
+    fun delete(user: UserEntity)
 }
