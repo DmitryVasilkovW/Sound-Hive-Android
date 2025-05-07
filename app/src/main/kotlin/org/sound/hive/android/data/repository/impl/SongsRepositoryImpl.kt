@@ -1,6 +1,6 @@
 package org.sound.hive.android.data.repository.impl
 
-import org.sound.hive.android.R
+import org.sound.hive.android.api.SongApi
 import org.sound.hive.android.data.repository.SongsRepository
 import org.sound.hive.android.model.Song
 import javax.inject.Inject

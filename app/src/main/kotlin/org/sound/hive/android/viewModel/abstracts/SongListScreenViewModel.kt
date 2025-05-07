@@ -7,5 +7,5 @@ import org.sound.hive.android.model.SongListScreenState
 interface SongListScreenViewModel {
     val state: StateFlow<SongListScreenState>
     fun processIntent(intent: Any)
-    fun getSongs(): List<Song>
+    suspend fun getSongs(): List<Song>
 }
