@@ -107,7 +107,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideSongApi(client: HttpClient): SongApi = MockSongApi()
+    fun provideSongApi(client: HttpClient): SongApi = SongApiClient(client)
 
     @Provides
     @Singleton
