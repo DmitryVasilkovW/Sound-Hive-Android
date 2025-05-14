@@ -6,8 +6,8 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import org.sound.hive.android.action.HistoryAction
-import org.sound.hive.android.data.repository.SongsRepository
 import org.sound.hive.android.effect.HistorySideEffect
+import org.sound.hive.android.service.SongService
 import org.sound.hive.android.effect.HomeSideEffect
 import org.sound.hive.android.intent.HistoryIntent
 import org.sound.hive.android.ui.common.homeRoute
@@ -16,8 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
-    songsRepository: SongsRepository
-) : BaseSongListScreenViewModel<HistoryIntent, HistoryAction>(songsRepository) {
+    songService: SongService
+) : BaseSongListScreenViewModel<HistoryIntent, HistoryAction>(songService) {
 
     private val sideEffectMutable = MutableSharedFlow<HistorySideEffect>()
     val sideEffect = sideEffectMutable.asSharedFlow()

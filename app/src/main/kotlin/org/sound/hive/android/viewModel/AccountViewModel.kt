@@ -12,17 +12,18 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.sound.hive.android.action.AccountAction
-import org.sound.hive.android.data.repository.UserRepository
 import org.sound.hive.android.effect.AccountSideEffect
+import org.sound.hive.android.service.UserService
 import org.sound.hive.android.effect.HomeSideEffect
 import org.sound.hive.android.intent.AccountIntent
+import org.sound.hive.android.model.User
 import org.sound.hive.android.model.account.AccountState
 import org.sound.hive.android.ui.common.homeRoute
 import javax.inject.Inject
 
 @HiltViewModel
 class AccountViewModel @Inject constructor(
-    private val userRepository: UserRepository
+    private val userService: UserService
 ) : ViewModel() {
     private val stateMutable = MutableStateFlow(AccountState())
     val state = stateMutable.asStateFlow()
@@ -67,10 +68,10 @@ class AccountViewModel @Inject constructor(
     private fun loadUser(id: Long) {
         viewModelScope.launch {
             stateMutable.update { it.copy(isLoading = true) }
-            val user = userRepository.getUserById(id)
+            val user = userService.getUserById(id.toString())
             stateMutable.update {
                 it.copy(
-                    user = user,
+                    user = user ?: User(),
                     isLoading = false
                 )
             }

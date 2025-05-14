@@ -34,8 +34,14 @@ fun SongItem(song: Song, index: Int, onCoverClick: () -> Unit) {
             modifier = Modifier.padding(end = 8.dp)
         )
 
+        val imageRes = if (song.strTrackThumb != null) {
+            R.drawable.velvet_underground_and_nico
+        } else {
+            R.drawable.ic_avatar_default
+        }
+
         Image(
-            painter = painterResource(id = song.coverResId),
+            painter = painterResource(id = imageRes),
             contentDescription = "Album cover",
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -48,12 +54,12 @@ fun SongItem(song: Song, index: Int, onCoverClick: () -> Unit) {
 
         Column {
             Text(
-                text = song.title,
+                text = song.strTrack ?: "Unknown",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onBackground
             )
             Text(
-                text = song.artist,
+                text = song.strArtist ?: "Unknown",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
             )
@@ -63,39 +69,33 @@ fun SongItem(song: Song, index: Int, onCoverClick: () -> Unit) {
 
 val songsExample = mutableStateListOf(
     Song(
-        id = 1,
-        coverResId = R.drawable.velvet_underground_and_nico,
-        title = "Sunday Morning",
-        artist = "The Velvet Underground"
+        idTrack = "1",
+        strTrack = "Sunday Morning",
+        strArtist = "The Velvet Underground"
     ),
     Song(
-        id = 2,
-        coverResId = R.drawable.neutral_milk_hotel,
-        title = "Holland, 1945",
-        artist = "Neutral Milk Hotel"
+        idTrack = "2",
+        strTrack = "Holland, 1945",
+        strArtist = "Neutral Milk Hotel"
     ),
     Song(
-        id = 3,
-        coverResId = R.drawable.panchiko,
-        title = "D>E>A>T>H>M>E>T>A>L",
-        artist = "Panchiko"
+        idTrack = "3",
+        strTrack = "D>E>A>T>H>M>E>T>A>L",
+        strArtist = "Panchiko"
     ),
     Song(
-        id = 4,
-        coverResId = R.drawable.jpn,
-        title = "Imperial",
-        artist = "j^p^n"
+        idTrack = "4",
+        strTrack = "Imperial",
+        strArtist = "j^p^n"
     ),
     Song(
-        id = 5,
-        coverResId = R.drawable.hoover,
-        title = "Electrolux",
-        artist = "Hoover"
+        idTrack = "5",
+        strTrack = "Electrolux",
+        strArtist = "Hoover"
     ),
     Song(
-        id = 5,
-        coverResId = R.drawable.car_seat_headrest,
-        title = "Sober to Death",
-        artist = "Car Seat Headrest"
+        idTrack = "6",
+        strTrack = "Sober to Death",
+        strArtist = "Car Seat Headrest"
     )
 )

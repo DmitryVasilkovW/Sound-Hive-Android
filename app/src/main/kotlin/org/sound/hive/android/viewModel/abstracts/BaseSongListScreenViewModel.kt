@@ -3,17 +3,17 @@ package org.sound.hive.android.viewModel.abstracts
 import androidx.lifecycle.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-import org.sound.hive.android.data.repository.*
 import org.sound.hive.android.model.*
+import org.sound.hive.android.service.SongService
 
 abstract class BaseSongListScreenViewModel<Intent, Action>(
-    protected val songsRepository: SongsRepository,
+    protected val songService: SongService,
 ) : ViewModel(), SongListScreenViewModel {
 
     protected val stateMutable = MutableStateFlow(SongListScreenState())
     override val state: StateFlow<SongListScreenState> = stateMutable.asStateFlow()
 
-    override fun getSongs(): List<Song> = songsRepository.getSongs()
+    override suspend fun getSongs(): List<Song> = songService.getAllSongs()
 
     override fun processIntent(intent: Any) {
         @Suppress("UNCHECKED_CAST")

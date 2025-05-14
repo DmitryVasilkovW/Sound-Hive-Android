@@ -6,8 +6,8 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import org.sound.hive.android.action.FavoritesAction
-import org.sound.hive.android.data.repository.SongsRepository
 import org.sound.hive.android.effect.FavoritesSideEffect
+import org.sound.hive.android.service.SongService
 import org.sound.hive.android.effect.HistorySideEffect
 import org.sound.hive.android.intent.FavoritesIntent
 import org.sound.hive.android.ui.common.homeRoute
@@ -16,8 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FavoritesViewModel @Inject constructor(
-    songsRepository: SongsRepository
-) : BaseSongListScreenViewModel<FavoritesIntent, FavoritesAction>(songsRepository) {
+    songService: SongService
+) : BaseSongListScreenViewModel<FavoritesIntent, FavoritesAction>(songService) {
 
     private val sideEffectMutable = MutableSharedFlow<FavoritesSideEffect>()
     val sideEffect = sideEffectMutable.asSharedFlow()

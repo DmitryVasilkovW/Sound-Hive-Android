@@ -13,8 +13,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.sound.hive.android.R
 import org.sound.hive.android.action.HomeAction
-import org.sound.hive.android.data.repository.FriendsRepository
 import org.sound.hive.android.effect.HomeSideEffect
+import org.sound.hive.android.service.FriendsService
 import org.sound.hive.android.intent.HomeIntent
 import org.sound.hive.android.model.home.HomeState
 import org.sound.hive.android.ui.common.accountRoute
@@ -24,7 +24,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val friendsRepository: FriendsRepository
+    private val friendsService: FriendsService
 ) : ViewModel() {
 
     private val stateMutable = MutableStateFlow(HomeState())
@@ -66,7 +66,7 @@ class HomeViewModel @Inject constructor(
     private fun loadFriends() {
         viewModelScope.launch {
             stateMutable.update { it.copy(isLoading = true) }
-            val friends = friendsRepository.getFriends()
+            val friends = friendsService.getAllFriends()
             stateMutable.update {
                 it.copy(
                     friends = friends,
