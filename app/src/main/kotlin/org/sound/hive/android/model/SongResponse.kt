@@ -1,8 +1,8 @@
 package org.sound.hive.android.model
 
-import kotlinx.serialization.Serializable
+import kotlinx.serialization.*
 
 @Serializable
 data class SongResponse(
-    val song: List<Song>?
+    @SerialName("track") val track: List<Song>? = null
 )
