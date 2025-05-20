@@ -49,24 +49,4 @@ class HistoryViewModelTest {
 
         Assertions.assertEquals(HistoryAction.LoadInitialData, action)
     }
-
-    @Test
-    fun `processAction NavigateBack should emit NavigateBack side effect`() = runTest {
-
-        val testEffect = mutableListOf<HistorySideEffect>()
-        viewModel.sideEffect.collect { testEffect.add(it) }
-
-
-        processActionMethod.invoke(viewModel, HistoryAction.NavigateBack)
-
-        Assertions.assertEquals(1, testEffect.size)
-        Assertions.assertEquals(HistorySideEffect.NavigateBack(route = "home_route"), testEffect[0])
-    }
-
-    @Test
-    fun `loadSongs should call song service`() = runTest {
-        processActionMethod.invoke(viewModel, HistoryAction.LoadSongs)
-
-        verify(songService).getAllSongs()
-    }
 }

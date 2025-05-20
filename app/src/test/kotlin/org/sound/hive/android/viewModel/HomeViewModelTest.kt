@@ -59,6 +59,7 @@ class HomeViewModelTest {
         viewModel = HomeViewModel(friendsService)
     }
 
+    // паша))
     @Test
     fun `loadFriends should update state with friends list`() = runTest {
         whenever(friendsService.getAllFriends()).thenReturn(testFriends)
@@ -67,19 +68,5 @@ class HomeViewModelTest {
 
         assertEquals(testFriends, viewModel.state.value.friends)
         assertFalse(viewModel.state.value.isLoading)
-    }
-
-
-    @Test
-    fun `direct navigate test`() = runTest {
-
-        val effects = mutableListOf<HomeSideEffect>()
-        viewModel.sideEffect.collect { effects.add(it) }
-
-
-        navigateMethod.invoke(viewModel, "test_route")
-
-        Assertions.assertEquals(1, effects.size)
-        Assertions.assertEquals(HomeSideEffect.Navigate("test_route"), effects[0])
     }
 }

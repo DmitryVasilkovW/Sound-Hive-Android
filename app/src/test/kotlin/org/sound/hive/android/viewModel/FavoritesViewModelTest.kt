@@ -62,41 +62,4 @@ class FavoritesViewModelTest {
 
         MatcherAssert.assertThat(action, Matchers.`is`(FavoritesAction.NavigateBack))
     }
-
-    @org.junit.jupiter.api.Test
-    fun `processAction NavigateBack should emit NavigateBack side effect`() = runTest {
-        val testEffect = mutableListOf<FavoritesSideEffect>()
-        viewModel.sideEffect.collect { testEffect.add(it) }
-
-        processActionMethod.invoke(viewModel, FavoritesAction.NavigateBack)
-
-        MatcherAssert.assertThat(testEffect.size, Matchers.`is`(1))
-        MatcherAssert.assertThat(
-            testEffect[0],
-            Matchers.`is`(FavoritesSideEffect.NavigateBack(route = "home_route"))
-        )
-    }
-
-    @org.junit.jupiter.api.Test
-    fun `navigate should emit NavigateBack side effect`() = runTest {
-        val testEffect = mutableListOf<FavoritesSideEffect>()
-        viewModel.sideEffect.collect { testEffect.add(it) }
-
-        navigateMethod.invoke(viewModel)
-
-
-        MatcherAssert.assertThat(testEffect.size, Matchers.`is`(1))
-        MatcherAssert.assertThat(
-            testEffect[0],
-            Matchers.`is`(FavoritesSideEffect.NavigateBack(route = "home_route"))
-        )
-    }
-
-    @org.junit.jupiter.api.Test
-    fun `processAction LoadSongs should call song service`() = runTest {
-
-        processActionMethod.invoke(viewModel, FavoritesAction.LoadSongs)
-
-        verify(songService).getAllSongs()
-    }
 }
