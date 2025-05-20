@@ -102,14 +102,108 @@ dependencies {
     testImplementation("androidx.room:room-testing:2.7.1")
     testImplementation("androidx.test.espresso:espresso-core:3.5.1")
     testImplementation("androidx.test.ext:junit:1.1.5")
-    testImplementation(kotlin("test"))
+    testImplementation("org.jetbrains.kotlin:kotlin-test:${libs.versions.kotlin.get()}")
 
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.ktor.client.mock)
+    testImplementation(libs.mviKotlin.main)
 }
 
 kapt {
     correctErrorTypes = true
 }
 
+tasks.register<Test>("runUnitTests") {
+    description = "Runs unit tests without using the worker process"
+    group = "verification"
+
+    testClassesDirs = sourceSets["test"].output.classesDirs
+    classpath = sourceSets["test"].runtimeClasspath
+
+    useJUnitPlatform()
+
+    maxHeapSize = "1g"
+
+    systemProperty("java.awt.headless", "true")
+    systemProperty("file.encoding", "UTF-8")
+
+    forkEvery = 0
+
+    jvmArgs(
+        "-Xmx1g",
+        "-XX:MaxMetaspaceSize=512m",
+        "-Dfile.encoding=UTF-8"
+    )
+
+    testLogging {
+        events("passed", "skipped", "failed")
+        showStandardStreams = true
+        showExceptions = true
+        showCauses = true
+        showStackTraces = true
+    }
+
+    outputs.upToDateWhen { false }
+}
+
+tasks.register("directTest") {
+    description = "Runs tests directly using Java command"
+    group = "verification"
+
+    doLast {
+        val testClasspath = sourceSets["test"].runtimeClasspath.asPath
+
+        val testClassesDir = sourceSets["test"].output.classesDirs.asPath
+
+        val testClass = "org.sound.hive.android.api.SongApiClientTest"
+
+        exec {
+            executable = "java"
+            args = listOf(
+                "-cp", testClasspath,
+                "-Djava.awt.headless=true",
+                "-Dfile.encoding=UTF-8",
+                "org.junit.platform.console.ConsoleLauncher",
+                "execute",
+                "--scan-classpath",
+                "--classpath=$testClassesDir",
+                "--select-class=$testClass"
+            )
+        }
+    }
+}
+
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
+
+    maxHeapSize = "1g"
+
+    systemProperty("java.awt.headless", "true")
+    systemProperty("file.encoding", "UTF-8")
+
+    systemProperty("org.gradle.daemon", "false")
+
+    systemProperty("org.gradle.workers.max", "1")
+    systemProperty("org.gradle.workers.classpath.isolation", "none")
+
+    forkEvery = 0
+    maxParallelForks = 1
+
+    jvmArgs(
+        "-Xmx1g",
+        "-XX:MaxMetaspaceSize=512m",
+        "-Dfile.encoding=UTF-8",
+        "-XX:+HeapDumpOnOutOfMemoryError"
+    )
+
+    testLogging {
+        events("passed", "skipped", "failed")
+        showStandardStreams = true
+        showExceptions = true
+        showCauses = true
+        showStackTraces = true
+        exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+    }
+
+    outputs.upToDateWhen { false }
 }

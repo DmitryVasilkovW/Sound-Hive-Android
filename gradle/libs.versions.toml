@@ -2,10 +2,11 @@
 agp = "8.9.2"
 authVersion = "2.1.2"
 constraintlayoutCompose = "1.1.1"
+coroutines = "1.7.3"
 gson = "2.11.0"
-junitJupiterApi = "5.12.2"
-junitJupiterEngine = "5.12.2"
-junitPlatformEngine = "1.12.2"
+junitJupiterApi = "5.10.2"
+junitJupiterEngine = "5.10.2"
+junitPlatformEngine = "1.10.2"
 kotlin = "2.1.20"
 coreKtx = "1.16.0"
 junit = "4.13.2"
@@ -62,6 +63,8 @@ ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 mviKotlin-main = { group = "com.arkivanov.mvikotlin", name = "mvikotlin-main", version.ref = "mviKotlin" }
 mviKotlin-extensions-coroutines = { group = "com.arkivanov.mvikotlin", name = "mvikotlin-extensions-coroutines", version.ref = "mviKotlin" }
 
