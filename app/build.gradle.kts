@@ -102,6 +102,13 @@ dependencies {
     testImplementation("androidx.room:room-testing:2.7.1")
     testImplementation("androidx.test.espresso:espresso-core:3.5.1")
     testImplementation("androidx.test.ext:junit:1.1.5")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+
+    testImplementation("io.ktor:ktor-client-mock:3.1.2")
+    testImplementation("io.ktor:ktor-client-content-negotiation:3.1.2")
+    testImplementation("io.ktor:ktor-serialization-kotlinx-json:3.1.2")
+
     testImplementation(kotlin("test"))
 
 }

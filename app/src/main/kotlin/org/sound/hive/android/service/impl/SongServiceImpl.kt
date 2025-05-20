@@ -1,13 +1,12 @@
 package org.sound.hive.android.service.impl
 
-import org.sound.hive.android.api.SongApi
-import org.sound.hive.android.data.repository.SongsRepository
-import org.sound.hive.android.data.room.AppDatabase
-import org.sound.hive.android.model.Song
-import org.sound.hive.android.model.room.entity.SongEntity
-import org.sound.hive.android.service.SongService
-import javax.inject.Inject
-import javax.inject.Singleton
+import org.sound.hive.android.api.*
+import org.sound.hive.android.data.repository.*
+import org.sound.hive.android.data.room.*
+import org.sound.hive.android.model.*
+import org.sound.hive.android.model.room.entity.*
+import org.sound.hive.android.service.*
+import javax.inject.*
 
 @Singleton
 class SongServiceImpl @Inject constructor(
@@ -18,6 +17,7 @@ class SongServiceImpl @Inject constructor(
     override suspend fun getAllSongs(): List<Song> {
         return songsRepository.getSongs()
     }
+
     override suspend fun getSongById(songId: String): Song? {
         val songDao = appDatabase.songDao()
         val songEntity = songDao.getSongById(songId)
@@ -28,7 +28,7 @@ class SongServiceImpl @Inject constructor(
         try {
             return songApi.getSongById(songId)
         } catch (e: Exception) {
-            e.printStackTrace()
+
             return null
         }
     }
@@ -37,19 +37,19 @@ class SongServiceImpl @Inject constructor(
         return try {
             songApi.getSongsByAlbum(albumId)
         } catch (e: Exception) {
-            // Log the error
-            e.printStackTrace()
             emptyList()
         }
     }
+
     override suspend fun getSongByMusicBrainzId(mbId: String): Song? {
         return try {
             songApi.getSongByMusicBrainzId(mbId)
         } catch (e: Exception) {
-            e.printStackTrace()
+
             null
         }
     }
+
     override suspend fun saveSong(song: Song): Boolean {
         return try {
             val songDao = appDatabase.songDao()
@@ -57,7 +57,7 @@ class SongServiceImpl @Inject constructor(
             songDao.insertSong(songEntity)
             true
         } catch (e: Exception) {
-            e.printStackTrace()
+
             false
         }
     }
@@ -68,7 +68,7 @@ class SongServiceImpl @Inject constructor(
             songDao.deleteSongById(songId)
             true
         } catch (e: Exception) {
-            e.printStackTrace()
+
             false
         }
     }
