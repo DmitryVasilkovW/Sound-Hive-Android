@@ -63,7 +63,6 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
@@ -92,8 +91,25 @@ dependencies {
     kapt(libs.androidx.room.compiler)
 
     androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test:core:1.5.0")
+    androidTestImplementation("androidx.room:room-testing:2.5.0")
+
+    testImplementation(libs.junit.jupiter.api)
+    testRuntimeOnly(libs.junit.jupiter.engine)
+    testImplementation(libs.junit.platform.launcher)
+    testImplementation(libs.junit.platform.engine)
+    testImplementation("androidx.room:room-testing:2.7.1")
+    testImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    testImplementation("androidx.test.ext:junit:1.1.5")
+    testImplementation(kotlin("test"))
+
 }
 
 kapt {
     correctErrorTypes = true
+}
+
+tasks.withType<Test>().configureEach {
+    useJUnitPlatform()
 }

@@ -11,6 +11,9 @@ interface UserDao {
     @get:Query("SELECT * FROM users")
     val all: MutableList<UserEntity>?
 
+    @Query("SELECT * FROM users WHERE id = :id")
+    suspend fun getUserById(id: String): UserEntity?
+
     @Delete
     fun delete(user: UserEntity)
 }
