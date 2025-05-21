@@ -1,20 +1,14 @@
 package org.sound.hive.android.viewModel
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
-import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.setMain
-import org.hamcrest.MatcherAssert
-import org.hamcrest.Matchers
-import org.junit.jupiter.api.BeforeEach
-import org.mockito.Mockito.mock
-import org.mockito.kotlin.verify
-import org.sound.hive.android.action.FavoritesAction
-import org.sound.hive.android.effect.FavoritesSideEffect
-import org.sound.hive.android.intent.FavoritesIntent
-import org.sound.hive.android.service.SongService
-import java.lang.reflect.Method
+import kotlinx.coroutines.*
+import kotlinx.coroutines.test.*
+import org.hamcrest.*
+import org.junit.jupiter.api.*
+import org.mockito.Mockito.*
+import org.sound.hive.android.action.*
+import org.sound.hive.android.intent.*
+import org.sound.hive.android.service.*
+import java.lang.reflect.*
 
 
 @ExperimentalCoroutinesApi
@@ -29,25 +23,13 @@ class FavoritesViewModelTest {
             .apply { isAccessible = true }
     }
 
-    private val processActionMethod: Method by lazy {
-        FavoritesViewModel::class.java
-            .getDeclaredMethod("processAction", FavoritesAction::class.java)
-            .apply { isAccessible = true }
-    }
-
-    private val navigateMethod: Method by lazy {
-        FavoritesViewModel::class.java
-            .getDeclaredMethod("navigate")
-            .apply { isAccessible = true }
-    }
-
     @BeforeEach
     fun setup() {
         Dispatchers.setMain(UnconfinedTestDispatcher())
         viewModel = FavoritesViewModel(songService)
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun `processIntent LoadInitialData should return LoadInitialData action`() {
         val action = processIntentMethod.invoke(viewModel, FavoritesIntent.LoadInitialData)
                 as FavoritesAction
@@ -55,7 +37,7 @@ class FavoritesViewModelTest {
         MatcherAssert.assertThat(action, Matchers.`is`(FavoritesAction.LoadInitialData))
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun `processIntent NavigateBack should return NavigateBack action`() {
         val action =
             processIntentMethod.invoke(viewModel, FavoritesIntent.NavigateBack) as FavoritesAction
