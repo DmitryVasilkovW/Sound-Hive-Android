@@ -1,11 +1,10 @@
 package org.sound.hive.android.service.impl
 
-import org.sound.hive.android.api.ApiService
-import org.sound.hive.android.data.repository.UserRepository
-import org.sound.hive.android.model.User
-import org.sound.hive.android.service.UserService
-import javax.inject.Inject
-import javax.inject.Singleton
+import org.sound.hive.android.api.*
+import org.sound.hive.android.data.repository.*
+import org.sound.hive.android.model.*
+import org.sound.hive.android.service.*
+import javax.inject.*
 
 @Singleton
 class UserServiceImpl @Inject constructor(
@@ -16,7 +15,6 @@ class UserServiceImpl @Inject constructor(
         try {
             return userRepository.getUserById(userId.toLong())
         } catch (e: Exception) {
-            e.printStackTrace()
             return null
         }
     }
@@ -25,7 +23,6 @@ class UserServiceImpl @Inject constructor(
         return try {
             User(name = "Current User", email = "user@example.com")
         } catch (e: Exception) {
-            e.printStackTrace()
             null
         }
     }
@@ -34,7 +31,6 @@ class UserServiceImpl @Inject constructor(
         return try {
             true
         } catch (e: Exception) {
-            e.printStackTrace()
             false
         }
     }

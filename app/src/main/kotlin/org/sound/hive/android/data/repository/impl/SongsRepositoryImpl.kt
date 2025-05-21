@@ -1,10 +1,9 @@
 package org.sound.hive.android.data.repository.impl
 
-import org.sound.hive.android.api.SongApi
-import org.sound.hive.android.data.repository.SongsRepository
-import org.sound.hive.android.model.Song
-import javax.inject.Inject
-import javax.inject.Singleton
+import org.sound.hive.android.api.*
+import org.sound.hive.android.data.repository.*
+import org.sound.hive.android.model.*
+import javax.inject.*
 
 @Singleton
 class SongsRepositoryImpl @Inject constructor(
@@ -19,7 +18,6 @@ class SongsRepositoryImpl @Inject constructor(
 
             return songApi.getSongsByAlbum("2118628")
         } catch (e: Exception) {
-            e.printStackTrace()
             return emptyList()
         }
     }
