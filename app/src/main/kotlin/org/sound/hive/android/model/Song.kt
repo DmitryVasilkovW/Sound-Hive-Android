@@ -95,7 +95,7 @@ data class Song(
     @SerialName("strDescriptionPL") val strDescriptionPL: String? = null,
 
     // Миниатюра изображения трека (если существует).
-    @SerialName("strTrackThumb") val strTrackThumb: String? = null,
+    @SerialName("strTrackThumb") var strTrackThumb: String? = null,
 
     // 3D изображение упаковки для трека (если существует).
     @SerialName("strTrack3DCase") val strTrack3DCase: String? = null,

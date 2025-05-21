@@ -77,6 +77,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.mviKotlin.main)
     implementation(libs.mviKotlin.extensions.coroutines)
+    implementation(libs.coil.compose)
 
     implementation(libs.auth.v212)
     implementation(libs.gson)

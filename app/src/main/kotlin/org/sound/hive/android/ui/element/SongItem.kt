@@ -6,12 +6,12 @@ import androidx.compose.foundation.shape.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.*
 import androidx.compose.ui.layout.*
 import androidx.compose.ui.res.*
 import androidx.compose.ui.unit.*
-import org.sound.hive.android.R
+import coil.compose.*
+import org.sound.hive.android.*
 import org.sound.hive.android.model.*
 
 @Composable
@@ -34,20 +34,17 @@ fun SongItem(song: Song, index: Int, onCoverClick: () -> Unit) {
             modifier = Modifier.padding(end = 8.dp)
         )
 
-        val imageRes = if (song.strTrackThumb != null) {
-            R.drawable.velvet_underground_and_nico
-        } else {
-            R.drawable.ic_avatar_default
-        }
-
-        Image(
-            painter = painterResource(id = imageRes),
+        AsyncImage(
+            model = song.strTrackThumb,
             contentDescription = "Album cover",
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .size(45.dp)
                 .clip(RoundedCornerShape(8.dp))
-                .clickable { onCoverClick() }
+                .clickable { onCoverClick() },
+            placeholder = painterResource(R.drawable.ic_avatar_default),
+            error = painterResource(R.drawable.ic_avatar_default),
+            fallback = painterResource(R.drawable.ic_avatar_default)
         )
 
         Spacer(modifier = Modifier.width(16.dp))

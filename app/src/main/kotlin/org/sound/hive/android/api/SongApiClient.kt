@@ -3,8 +3,7 @@ package org.sound.hive.android.api
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
-import org.sound.hive.android.model.Song
-import org.sound.hive.android.model.SongResponse
+import org.sound.hive.android.model.*
 
 class SongApiClient(
     private val httpClient: HttpClient
@@ -15,23 +14,42 @@ class SongApiClient(
     }
 
     override suspend fun getSongsByAlbum(albumId: String): List<Song> {
-        return httpClient.get("$BASE_URL/track.php") {
+        val songs = httpClient.get("$BASE_URL/track.php") {
             parameter("m", albumId)
         }.body<SongResponse>()
-            .song ?: emptyList()
+            .track ?: emptyList()
+
+        return songs.map {
+            getAlbumThumb(it)
+        }
     }
 
     override suspend fun getSongById(songId: String): Song? {
-        return httpClient.get("$BASE_URL/track.php") {
+        val song = httpClient.get("$BASE_URL/track.php") {
             parameter("h", songId)
         }.body<SongResponse>()
-            .song?.firstOrNull()
+            .track?.firstOrNull()
+
+        return song?.let { getAlbumThumb(it) }
     }
 
     override suspend fun getSongByMusicBrainzId(mbId: String): Song? {
-        return httpClient.get("$BASE_URL/track-mb.php") {
+        val song = httpClient.get("$BASE_URL/track-mb.php") {
             parameter("i", mbId)
         }.body<SongResponse>()
-            .song?.firstOrNull()
+            .track?.firstOrNull()
+
+        return song?.let { getAlbumThumb(it) }
+    }
+
+    private suspend fun getAlbumThumb(song: Song): Song {
+        val album = httpClient.get("$BASE_URL/album.php") {
+            parameter("m", song.idAlbum)
+        }.body<AlbumResponse>()
+            .album?.firstOrNull()
+
+        return song.apply {
+            strTrackThumb = album?.thumbnail
+        }
     }
 }
